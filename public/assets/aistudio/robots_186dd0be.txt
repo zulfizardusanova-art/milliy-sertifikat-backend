@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://milliy-sertifikat-cca37.web.app/sitemap.xml

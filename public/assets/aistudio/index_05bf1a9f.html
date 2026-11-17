@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="google-site-verification" content="KgywrhGSFMFWV1BQWPVM9Ho6FeIfzY8bCvFNKTKHPTQ" />
+<title>Milliy sertifikat mock test — Rasch modeli bo‘yicha onlayn testlar</title>
+<meta name="description" content="Milliy sertifikatga tayyorlanayotganlar uchun onlayn mock testlar: matematika, vaqt bilan ishlash, Rasch modeli bo‘yicha ball, reyting va olimpiadalar.">
+<meta name="robots" content="index,follow">
+<link rel="canonical" href="https://milliy-sertifikat-cca37.web.app/">
+<meta property="og:type" content="website"><meta property="og:locale" content="uz_UZ">
+<meta property="og:title" content="Milliy sertifikat mock test">
+<meta property="og:description" content="Onlayn mock testlar, Rasch ball, reyting va olimpiadalar. Milliy sertifikatga tayyorlaning.">
+<meta property="og:url" content="https://milliy-sertifikat-cca37.web.app/">
+<meta name="theme-color" content="#2540ff">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"Milliy sertifikat mock test","url":"https://milliy-sertifikat-cca37.web.app/","inLanguage":"uz"}</script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/mathjs@12.4.2/lib/browser/math.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<style>
+:root{--ink:#101828;--mut:#667085;--line:#e4e7ec;--soft:#f6f7fb;--card:#fff;--bg:#fff;--glow:rgba(37,64,255,.10);--acc:#2540ff;--amb:#b45309;--ok:#12805c;--bad:#c62f3d;--tint:var(--tint);--tl:var(--tl);--okbg:var(--okbg);--okl:var(--okl);--wnbg:var(--wnbg);--ibd:var(--ibd);color-scheme:light}
+:root[data-theme=dark]{--ink:#e7ecf5;--mut:#8d9ab0;--line:#1f2b40;--soft:#16213a;--card:#111a2d;--bg:#0b1220;--glow:rgba(91,124,255,.24);--acc:#5b7cff;--amb:#fbbf24;--ok:#34d399;--bad:#f87171;--tint:#17244a;--tl:#26376b;--okbg:#0f2b24;--okl:#1b5b49;--wnbg:#3a2c0a;--ibd:#2a3a58;color-scheme:dark}
+*{box-sizing:border-box}html,body{margin:0}
+body{background:radial-gradient(900px 420px at 78% -6%,var(--glow),transparent 70%) fixed,var(--bg);color:var(--ink);font:400 16px/1.55 Manrope,system-ui,"Segoe UI",sans-serif;min-height:100vh;display:flex;flex-direction:column}
+#app{flex:1}h1,h2,h3,p{margin:0}h1{font-size:clamp(26px,4vw,40px);font-weight:800;letter-spacing:-.02em;line-height:1.2}h2{font-size:20px;font-weight:800}h3{font-size:17px;font-weight:600}
+.sub,.hint{color:var(--mut)}.hint{font-size:14px;margin-top:6px}
+button{font:inherit;cursor:pointer}:focus-visible{outline:3px solid var(--acc);outline-offset:2px}
+header{border-bottom:1px solid var(--line);position:sticky;top:0;background:var(--card);z-index:5}
+.in,main{max-width:960px;margin:0 auto;padding:0 20px}
+.in{display:flex;align-items:center;gap:20px;min-height:60px;flex-wrap:wrap}.logo{font-weight:800;font-size:18px;margin-right:auto}
+nav{display:flex;gap:4px}nav button{background:none;border:0;padding:8px 12px;border-radius:8px;color:var(--mut);font-weight:600}nav button.on{background:var(--soft);color:var(--ink)}
+.who{font-size:14px;display:flex;gap:8px;align-items:center}
+.role{font-style:normal;font-size:12px;padding:2px 8px;border-radius:99px;background:var(--soft);font-weight:600}.r-owner{background:var(--card)3d6;color:var(--amb)}.r-admin{background:var(--tint);color:var(--acc)}
+.lnk{background:none;border:0;color:var(--acc);padding:0;text-decoration:underline}
+main{padding-top:28px;padding-bottom:48px}
+.btn{background:var(--acc);color:#fff;border:0;border-radius:10px;padding:10px 18px;font-weight:600}.btn:disabled{background:var(--line);color:var(--mut);cursor:not-allowed}
+.btn.ghost{background:var(--card);color:var(--ink);border:1px solid var(--line)}.btn.del{background:var(--card);color:var(--bad);border:1px solid var(--line);padding:6px 12px}
+.flash{background:var(--okbg);color:var(--ok);padding:12px 16px;border-radius:10px;margin-bottom:20px;font-weight:600}
+.hero{display:grid;gap:24px;padding-bottom:28px;border-bottom:1px solid var(--line)}
+.stats{display:grid;grid-template-columns:repeat(3,1fr)}.stats>div{padding:4px 20px;border-left:2px solid var(--line)}.stats>div:first-child{padding-left:0;border-left:0}
+.stats b{display:block;font-size:clamp(24px,5vw,42px);font-weight:800;line-height:1.1;letter-spacing:-.02em}.stats span{color:var(--mut);font-size:14px}
+.lvl{display:flex;align-items:center;gap:14px;flex-wrap:wrap;font-size:14px;color:var(--mut)}.ticks{display:flex;gap:6px}.ticks i{width:44px;height:10px;border-radius:3px;background:var(--line)}.ticks i.f{background:var(--acc)}
+h2.sec{margin:32px 0 8px}
+.row{display:flex;justify-content:space-between;gap:16px;align-items:center;padding:18px 0;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.meta{display:flex;gap:16px;flex-wrap:wrap;color:var(--mut);font-size:14px;margin-top:4px}.act{display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+.wait{color:var(--amb);font-size:14px}.done{color:var(--ok);font-weight:600;font-size:14px}.empty{color:var(--mut);padding:24px 0}
+.panel{border:1px solid var(--line);border-radius:12px;padding:20px;margin-top:20px}
+label{display:block;font-weight:600;font-size:14px;margin-top:14px}
+input,select,textarea{width:100%;font:inherit;padding:10px 12px;border:1px solid var(--ibd);border-radius:8px;margin-top:6px;background:var(--card);color:var(--ink)}
+textarea{font-family:ui-monospace,Consolas,monospace;font-size:14px}.two{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.err{color:var(--bad);font-weight:600;margin-top:10px}
+.seg{display:flex;gap:4px;background:var(--soft);padding:4px;border-radius:10px;margin:20px 0 4px}.seg button{flex:1;border:0;background:none;padding:8px;border-radius:7px;font-weight:600;color:var(--mut)}.seg button.on{background:var(--card);color:var(--ink);box-shadow:0 1px 2px rgba(16,24,40,.12)}
+.auth{max-width:400px;padding-top:64px}.auth .btn{width:100%;margin-top:18px}
+.tw{overflow-x:auto}table{width:100%;border-collapse:collapse;font-size:15px;min-width:520px}th,td{text-align:left;padding:12px 10px;border-bottom:1px solid var(--line)}th{color:var(--mut);font-weight:600;font-size:14px}tr.me td{background:var(--tint)}.rk{font-weight:800;width:44px}
+.bar{position:sticky;top:0;background:var(--card);border-bottom:1px solid var(--line);z-index:5}.bar .in{justify-content:space-between}
+#tm{font-size:28px;font-weight:800;font-variant-numeric:tabular-nums;color:var(--amb)}
+.q{padding:20px 0;border-bottom:1px solid var(--line)}.q>p{font-weight:600;margin-bottom:10px}
+.opt{display:flex;gap:10px;align-items:flex-start;padding:10px 12px;border:1px solid var(--line);border-radius:8px;margin-top:8px;cursor:pointer;font-weight:400;font-size:16px}
+.opt input{width:auto;margin:5px 0 0}.opt:has(input:checked){border-color:var(--acc);background:var(--tint)}
+.tools{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}.tools button{border:1px solid var(--line);background:var(--soft);border-radius:8px;padding:5px 11px;font-size:15px;min-width:40px}
+.pv{padding:6px 10px;border-radius:6px;margin-top:4px}.pv.ok{background:var(--okbg);color:var(--ok);font-weight:600}
+.grid{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}.g{min-width:46px;padding:6px 8px;border:1px solid var(--line);background:var(--card);border-radius:8px;font-weight:600;color:var(--mut)}.g.f{background:var(--okbg);border-color:var(--okl);color:var(--ok)}.g.on{outline:2px solid var(--acc);color:var(--ink)}
+.ed{margin-top:18px;padding-top:6px;border-top:1px solid var(--line)}.qi{max-width:100%;max-height:340px;display:block;margin:10px 0;border-radius:8px;border:1px solid var(--line)}
+.orow{display:flex;gap:10px;align-items:center;margin-top:8px}.orow input{margin:0}.rd{display:flex;gap:6px;align-items:center;margin:0;white-space:nowrap}.rd input{width:auto;margin:0}
+.pre{display:flex;gap:8px;align-items:flex-start;margin-top:10px}.pre b{padding-top:18px}.up{display:inline-block;margin:0;cursor:pointer}
+.gh{font-weight:800;font-size:18px;margin-bottom:6px}.wi{margin-top:10px}.wp{min-height:28px;color:var(--mut);margin-top:8px}.imgb{margin-top:10px}
+.hero{padding:24px;border:1px solid var(--tl);border-radius:16px;background:var(--tint)}.wl{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:flex-start}
+.chips{display:flex;gap:8px;flex-wrap:wrap}.chip{background:var(--acc);color:#fff;border-radius:99px;padding:4px 14px;font-weight:700;font-size:14px}.chip.pm{background:#f59e0b}
+.lv{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 16px}.lvh{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;font-size:14px;margin-bottom:8px}.lvh span{color:var(--mut)}
+.pb{height:10px;background:var(--line);border-radius:99px;overflow:hidden}.pb i{display:block;height:100%;background:var(--acc);border-radius:99px;transition:width .4s}
+.ck{display:flex;gap:8px;align-items:center;margin-top:34px}.ck input{width:auto;margin:0}
+.payc{border:1px dashed var(--tl);background:var(--tint);border-radius:12px;padding:14px 16px;margin:12px 0;display:flex;flex-direction:column;gap:2px;font-size:18px}.payc span{font-size:14px;color:var(--mut)}
+.rq{display:flex;justify-content:space-between;gap:16px;align-items:flex-start;padding:14px 0;border-bottom:1px solid var(--line);flex-wrap:wrap}.pdfb{margin-top:22px;padding:16px;border:1px dashed var(--line);border-radius:12px;background:var(--soft)}
+.st{font-weight:600;font-size:14px}.st.ok{color:var(--ok)}.st.no{color:var(--bad)}.st.pe{color:var(--amb)}
+
+.app{display:grid;grid-template-columns:262px minmax(0,1fr);min-height:100vh}
+.side{position:sticky;top:0;height:100vh;display:flex;flex-direction:column;gap:2px;padding:18px 14px;border-right:1px solid var(--line);background:var(--card);overflow:auto}
+.brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:19px;padding:2px 8px 14px}.brand i{width:36px;height:36px;border-radius:11px;background:linear-gradient(135deg,#2540ff,#8b5cf6);display:grid;place-items:center;color:#fff;font-style:normal}
+.sg{font-size:12px;color:var(--mut);text-transform:uppercase;letter-spacing:.07em;margin:16px 10px 6px}
+.sl{display:flex;align-items:center;gap:11px;width:100%;text-align:left;padding:11px 12px;border:0;background:none;border-radius:11px;color:var(--mut);font-weight:600;font-size:15px}.sl:hover{background:var(--soft);color:var(--ink)}.sl.on{background:var(--tint);color:var(--acc)}.sl svg{width:19px;height:19px;flex:none}
+.sf{margin-top:auto;padding-top:14px;border-top:1px solid var(--line);display:flex;flex-direction:column;gap:10px}
+.uc{display:flex;gap:10px;align-items:center}.av{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#2540ff,#8b5cf6);color:#fff;display:grid;place-items:center;font-weight:800;flex:none}
+.tb2{display:flex;gap:8px}.tb2 select,.tb2 button{margin:0;padding:9px 10px;font-size:14px}.tb2 button{width:auto}
+.top{display:flex;align-items:center;gap:12px;padding:14px 28px;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:4;background:color-mix(in srgb,var(--bg) 80%,transparent);backdrop-filter:blur(10px)}
+.crumb{color:var(--mut);font-size:14px}.crumb b{color:var(--ink)}.sp{flex:1}.burger{display:none;padding:8px 12px}.ov{display:none}
+.pg{padding:28px;max-width:1040px}
+.row{border:1px solid var(--line);border-radius:14px;background:var(--card);padding:16px 18px;margin-top:10px}
+.panel{background:var(--card)}.tw{background:var(--card);border:1px solid var(--line);border-radius:14px}
+.hero{background:linear-gradient(135deg,var(--tint),var(--card) 72%);border:1px solid var(--tl);border-radius:20px;padding:26px}
+.stats{gap:12px}.stats>div,.stats>div:first-child{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px}
+.auth{max-width:420px;padding:36px 20px}.atb{display:flex;justify-content:flex-end;margin-bottom:28px}
+.bar .in{max-width:1280px}
+.xwrap{display:grid;grid-template-columns:minmax(0,1fr);gap:20px;max-width:1280px;margin:0 auto;padding:16px 20px 40px}
+body.sh .xwrap{grid-template-columns:minmax(0,1fr) 390px}
+.q{scroll-margin-top:84px}.q.ans .qn{color:var(--ok)}
+.op{display:flex;gap:10px;padding:9px 12px;border:1px solid var(--line);border-radius:10px;margin-top:8px;background:var(--card)}
+.sheet{display:none;position:sticky;top:86px;align-self:start;max-height:calc(100vh - 106px);overflow:auto;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px}
+body.sh .sheet{display:block}
+.sh-h{display:flex;justify-content:space-between;align-items:center;padding:2px 4px 10px;border-bottom:1px solid var(--line)}
+.sr{display:flex;align-items:center;gap:10px;padding:8px 4px;border-bottom:1px solid var(--line)}
+.sn{min-width:44px;font-weight:800;background:none;border:0;color:var(--acc);text-align:left;padding:0;font-size:15px}
+.pills{display:flex;gap:6px;flex:1}.pill{flex:1;margin:0}.pill input{display:none}
+.pill span{display:block;text-align:center;padding:9px 0;border:1px solid var(--line);border-radius:10px;font-weight:700;cursor:pointer;background:var(--soft)}
+.pill input:checked+span{background:var(--acc);border-color:var(--acc);color:#fff}
+.sw{padding:9px 4px;border-bottom:1px solid var(--line)}.sw .t2{display:flex;gap:10px;align-items:center}.sw .wi{margin:0}
+@media(max-width:900px){
+.app{grid-template-columns:1fr}
+.side{position:fixed;left:0;top:0;bottom:0;width:284px;z-index:30;transform:translateX(-105%);transition:transform .2s}
+body.nav .side{transform:none;box-shadow:0 0 40px rgba(0,0,0,.4)}body.nav .ov{display:block;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:25}
+.burger{display:inline-block}.top{padding:10px 14px}.pg{padding:16px 14px}.hero{padding:18px}
+.xwrap{padding:12px 12px 30px}body.sh .xwrap{grid-template-columns:minmax(0,1fr)}
+.sheet{position:fixed;left:0;right:0;bottom:0;top:auto;max-height:58vh;border-radius:18px 18px 0 0;z-index:20;box-shadow:0 -12px 30px rgba(0,0,0,.35);padding-bottom:calc(14px + env(safe-area-inset-bottom,0px))}
+body.sh .xq{padding-bottom:62vh}.btn{padding:12px 16px}.bar .in{gap:10px;padding:8px 14px}#tm{font-size:22px}
+}
+footer{border-top:1px solid var(--line);padding:20px;text-align:center;color:var(--mut);font-size:14px}footer a{color:var(--acc);font-weight:600;text-decoration:none}
+@media(max-width:600px){.two{grid-template-columns:1fr}.stats>div{padding:4px 10px}.ticks i{width:30px}}
+</style>
+</head>
+<body>
+<div id="app"><main class="auth"><div class="atb">${tbar()}</div><h1>Milliy sertifikat mock test</h1><p class="sub">Milliy sertifikatga tayyorlanayotganlar uchun onlayn testlar: vaqt bilan mock test, Rasch modeli bo‘yicha ball, reyting va olimpiadalar.</p><noscript><p class="err">Saytni ishlatish uchun JavaScript yoqilgan bo‘lishi kerak.</p></noscript></main></div>
+<footer>Muallif va aloqa: <a data-nt href="https://t.me/Vip_chelik1" target="_blank" rel="noopener">@Vip_chelik1</a> (Telegram)</footer>
+<script type="module">
+import {initializeApp} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import {getAuth,onAuthStateChanged,createUserWithEmailAndPassword,signInWithEmailAndPassword,signOut} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import {getFirestore,collection,doc,getDoc,setDoc,onSnapshot,writeBatch,query,where,serverTimestamp,Timestamp} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+/* ====== 1) Firebase sozlamalarini shu yerga qo‘ying ====== */
+const CFG={apiKey:"AIzaSyABoTRBxxwLvZfDoUM_9x6-GWqgPWvXLU0",authDomain:"milliy-sertifikat-cca37.firebaseapp.com",projectId:"milliy-sertifikat-cca37",appId:"1:353309786241:web:d3ddf26597c9ce4bbe0d80"};
+/* ========================================================= */
+
+const ok_=!CFG.apiKey.startsWith('YOUR'),RL={user:'Foydalanuvchi',admin:'Admin',owner:'Owner'};
+let auth,fs;if(ok_){const a=initializeApp(CFG);auth=getAuth(a);fs=getFirestore(a)}
+const S={users:[],tests:[],att:[],starts:{},pay:{price:10000,card:'',holder:'',note:''},mreq:[],req:[]},done=new Set();
+let uid=null,ready=false,view='home',tab='tests',mode='login',msg='',flash='',tick,form={nm:'',lg:''},draft={tt:'',ta:'',td:60,it:{},im:{},sel:'1',te:'',oly:false,eid:''},unsub=[];
+const $=s=>document.querySelector(s),pad=n=>String(n).padStart(2,'0');
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const M=s=>String(s).split(/\$([^$]+)\$/).map((p,i)=>i%2&&window.katex?katex.renderToString(p,{throwOnError:false}):esc(p)).join('');
+const clock=s=>{s=Math.max(0,Math.floor(s));const h=Math.floor(s/3600);return(h?h+':':'')+pad(Math.floor(s%3600/60))+':'+pad(s%60)};
+const span=s=>{s=Math.round(s);const h=Math.floor(s/3600),m=Math.floor(s%3600/60);return h?h+' soat '+m+' daq':m+' daq '+(s%60)+' son'};
+const fd=t=>{const d=new Date(t);return`${pad(d.getDate())}.${pad(d.getMonth()+1)}.${d.getFullYear()} ${pad(d.getHours())}:${pad(d.getMinutes())}`};
+const me=()=>S.users.find(u=>u.id===uid),att=tid=>S.att.find(a=>a.uid===uid&&a.tid===tid);
+const sum=a=>a.reduce((x,y)=>x+y,0);
+const getA=id=>{try{return JSON.parse(localStorage.getItem('ans_'+id))||{}}catch(e){return{}}};
+
+/* ---------- mavzu va til ---------- */
+const LGS=[['uz','O‘zbekcha'],['uzc','Ўзбекча'],['ru','Русский'],['en','English']];
+let lang=localStorage.getItem('ms_lang')||'uz',theme=localStorage.getItem('ms_theme')||'dark',shOpen=innerWidth>=900;
+if(!LGS.some(l=>l[0]===lang))lang='uz';
+document.documentElement.dataset.theme=theme;document.documentElement.lang=lang.slice(0,2);
+window.togTheme=()=>{theme=theme==='dark'?'light':'dark';localStorage.setItem('ms_theme',theme);document.documentElement.dataset.theme=theme;render()};
+window.setLang=l=>{lang=l;localStorage.setItem('ms_lang',l);document.documentElement.lang=l.slice(0,2);render()};
+window.togNav=()=>document.body.classList.toggle('nav');
+window.togSheet=()=>{shOpen=!shOpen;document.body.classList.toggle('sh',shOpen)};
+window.goQ=i=>{const e=document.getElementById('q'+i);if(e)e.scrollIntoView({behavior:'smooth',block:'start'})};
+const tbar=()=>`<div class="tb2"><select data-nt aria-label="Til" onchange="setLang(this.value)">${LGS.map(l=>`<option value="${l[0]}"${l[0]===lang?' selected':''}>${l[1]}</option>`).join('')}</select><button class="btn ghost" onclick="togTheme()" aria-label="Mavzu">${theme==='dark'?'☀':'☾'}</button></div>`;
+function cyr(s){
+  if(/[@_\/]|https?:/.test(s))return s;
+  const M={a:'а',b:'б',d:'д',e:'е',f:'ф',g:'г',h:'ҳ',i:'и',j:'ж',k:'к',l:'л',m:'м',n:'н',o:'о',p:'п',q:'қ',r:'р',s:'с',t:'т',u:'у',v:'в',x:'х',y:'й',z:'з',c:'ц'},AP='‘’\'ʻ`';
+  let o='',i=0;
+  while(i<s.length){
+    const c=s[i],l=c.toLowerCase(),n=s[i+1]||'',nl=n.toLowerCase(),up=c!==l,put=x=>{o+=up?x.toUpperCase():x};
+    if((l==='o'||l==='g')&&n&&AP.includes(n)){put(l==='o'?'ў':'ғ');i+=2;continue}
+    if(l==='s'&&nl==='h'){put('ш');i+=2;continue}
+    if(l==='c'&&nl==='h'){put('ч');i+=2;continue}
+    if(l==='c'&&nl==='k'){put('к');i+=2;continue}
+    if(l==='c'&&!'eiy'.includes(nl||'-')){put('к');i++;continue}
+    if(l==='y'&&nl==='e'){put('е');i+=2;continue}
+    if(l==='y'&&nl&&'oua'.includes(nl)&&!(s[i+2]&&AP.includes(s[i+2]))){put({o:'ё',u:'ю',a:'я'}[nl]);i+=2;continue}
+    if(l==='e'&&(i===0||!/[a-z‘’']/i.test(s[i-1]))){put('э');i++;continue}
+    if(AP.includes(c)&&i>0&&/[a-z]/i.test(s[i-1])&&/[a-z]/i.test(n)){o+='ъ';i++;continue}
+    if(M[l]){put(M[l]);i++;continue}
+    o+=c;i++}
+  return o}
+const EX=[['Bosh sahifa','Главная','Home'],['Mock testlar','Мок-тесты','Mock tests'],['Olimpiada','Олимпиада','Olympiad'],['Reyting','Рейтинг','Leaderboard'],['Premium olish','Получить Premium','Get Premium'],['Mashq','Практика','Practice'],['Boshqaruv','Управление','Management'],['Admin panel','Админ-панель','Admin panel'],['Chiqish','Выйти','Log out'],['Foydalanuvchi','Пользователь','User'],['Kirish','Войти','Log in'],['Ro‘yxatdan o‘tish','Регистрация','Sign up'],['Hisob yaratish','Создать аккаунт','Create account'],['Ism','Имя','Name'],['Login','Логин','Login'],['Parol','Пароль','Password'],['Testni boshlash','Начать тест','Start test'],['Testni yakunlash','Завершить тест','Finish test'],['Javoblar varag‘i','Бланк ответов','Answer sheet'],['Qolgan vaqt','Осталось времени','Time left'],['Daraja','Уровень','Level'],['Vaqt','Время','Time'],['Ball','Балл','Score'],['Testlar','Тесты','Tests'],['To‘g‘ri','Верно','Correct'],['yechilgan testlar','решено тестов','tests solved'],['ishlangan vaqt','затрачено времени','time spent'],['Xayrli tun!','Доброй ночи!','Good night!'],['Xayrli tong!','Доброе утро!','Good morning!'],['Xayrli kun!','Добрый день!','Good afternoon!'],['Xayrli kech!','Добрый вечер!','Good evening!'],['Vaqt tugagan','Время вышло','Time is up'],['Test yopilgan','Тест закрыт','Test closed'],['Yuklanmoqda…','Загрузка…','Loading…'],['So‘rov yuborish','Отправить заявку','Send request'],['So‘rovlarim','Мои заявки','My requests'],['Necha oyga','На сколько месяцев','How many months'],['To‘lov chekining rasmi','Фото чека об оплате','Payment receipt photo'],['Kutilmoqda','Ожидает','Pending'],['Tasdiqlandi','Подтверждено','Approved'],['Rad etildi','Отклонено','Rejected'],['Javobingiz','Ваш ответ','Your answer'],['Qidirish','Поиск','Search']];
+const PH=[['Xush kelibsiz, ','Добро пожаловать, ','Welcome, '],['Milliy sertifikatga tayyorlanayotganlar uchun onlayn testlar','Онлайн-тесты для подготовки к национальному сертификату','Online tests for national certificate preparation'],['Hozircha test yo‘q. Admin test qo‘shgach shu yerda ko‘rinadi.','Пока тестов нет. Они появятся здесь после добавления админом.','No tests yet. They will appear here once an admin adds them.'],['Boshlanishiga ','До начала ','Starts in '],['Boshlanish: ','Начало: ','Starts: '],['Tugash: ','Конец: ','Ends: '],['Ishlash vaqti: ','Время на тест: ','Duration: '],[' daqiqa',' мин',' min'],[' ta savol',' вопросов',' questions'],[' to‘g‘ri, ',' верно, ',' correct, '],[' soat ',' ч ',' h '],[' daq',' мин',' min'],['Rasch ball, 0–75','Балл Раша, 0–75','Rasch score, 0–75'],[', daraja ',', категория ',', grade '],['Maxsus daraja: ','Особый статус: ','Special rank: '],['Sayt boshqaruvchisi','Администратор сайта','Site manager'],['-daraja: ','-й уровень: ','-level: '],[' ball. Keyingisi: ',' баллов. Следующий: ',' pts. Next: '],['Eng yuqori darajaga erishdingiz!','Вы достигли высшего уровня!','You reached the top level!'],['Bepul tarif: ','Бесплатный тариф: ','Free plan: '],[' test ishlatildi.',' тестов использовано.',' tests used.'],['Bepul limit (2 ta) tugadi. ','Бесплатный лимит (2 теста) исчерпан. ','Free limit (2 tests) reached. '],['Rasch modeli: qiyin savolga to‘g‘ri javob ko‘proq ball beradi.','Модель Раша: верный ответ на трудный вопрос даёт больше баллов.','Rasch model: a correct answer to a harder question earns more points.'],['Hali hech kim test yechmagan.','Пока никто не решал тесты.','Nobody has taken a test yet.'],['Hozircha olimpiada yo‘q.','Олимпиад пока нет.','No olympiads yet.'],['Natijalar to‘g‘ri javoblar soni, keyin sarflangan vaqt bo‘yicha. Olimpiada bepul limitga kirmaydi.','Результаты: сначала число верных ответов, затем затраченное время. Олимпиады не входят в бесплатный лимит.','Results: correct answers first, then time spent. Olympiads do not count toward the free limit.'],['Bepul tarifda 2 ta test ishlash mumkin. Premiumda testlar cheksiz.','В бесплатном тарифе доступно 2 теста. В Premium тесты без ограничений.','The free plan allows 2 tests. Premium is unlimited.'],[' / oy',' / мес',' / month'],['1) Quyidagi kartaga to‘lov qiling. 2) Chek rasmini shu yerdan yuboring. 3) Owner tasdiqlagach premium yoqiladi.','1) Оплатите на карту ниже. 2) Отправьте фото чека здесь. 3) После подтверждения Owner включит Premium.','1) Pay to the card below. 2) Send the receipt photo here. 3) Premium is enabled once the Owner approves.'],['Hali so‘rov yuborilmagan.','Заявок пока нет.','No requests yet.'],['Kamida 8 belgi, harf va raqam bilan.','Минимум 8 символов, буквы и цифры.','At least 8 characters with letters and digits.'],['Yozma javobni son yoki ifoda ko‘rinishida yozing: 1/2, √2/2, 2π. Javoblar varag‘ini yuqoridagi tugma bilan ochasiz.','Письменный ответ записывайте числом или выражением: 1/2, √2/2, 2π. Бланк ответов открывается кнопкой сверху.','Write written answers as a number or expression: 1/2, √2/2, 2π. Open the answer sheet with the button above.'],['Muallif va aloqa: ','Автор и контакты: ','Author & contact: '],['Javob berilgan','Отвечено','Answered']].sort((a,b)=>b[0].length-a[0].length);
+const conv=k=>{if(lang==='uzc')return cyr(k);const i=lang==='ru'?1:2,e=EX.find(x=>x[0]===k);if(e)return e[i];let o=k;PH.forEach(x=>{if(o.includes(x[0]))o=o.split(x[0]).join(x[i])});return o};
+function tr(root){
+  if(!root||lang==='uz')return;
+  const w=document.createTreeWalker(root,NodeFilter.SHOW_TEXT,{acceptNode:n=>n.parentElement&&n.parentElement.closest('.katex,[data-nt],script,style,textarea')?NodeFilter.FILTER_REJECT:NodeFilter.FILTER_ACCEPT}),ns=[];
+  while(w.nextNode())ns.push(w.currentNode);
+  ns.forEach(n=>{const t=n.nodeValue,k=t.trim();if(!k)return;const o=conv(k);if(o!==k)n.nodeValue=t.replace(k,o)});
+  root.querySelectorAll('[placeholder],[aria-label]').forEach(e=>['placeholder','aria-label'].forEach(a=>{const v=e.getAttribute(a);if(v&&!e.closest('[data-nt]'))e.setAttribute(a,conv(v))}))}
+
+/* ---------- Rasch ---------- */
+let DC={};
+function diffA(tid,i){const k=tid+':'+i;if(DC[k]!==undefined)return DC[k];const a=S.att.filter(x=>x.tid===tid),c=sum(a.map(x=>x.ok[i]||0)),p=(c+1)/(a.length+2);return DC[k]=Math.log((1-p)/p)}
+function ability(id){
+  const it=[];S.att.filter(a=>a.uid===id).forEach(a=>a.ok.forEach((o,i)=>it.push([diffA(a.tid,i),o])));
+  if(!it.length)return null;const n=it.length;let s=sum(it.map(x=>x[1]));if(s===0)s=.5;if(s===n)s=n-.5;let th=0;
+  for(let k=0;k<40;k++){let f=0,d=0;it.forEach(([b])=>{const p=1/(1+Math.exp(-(th-b)));f+=p;d+=p*(1-p)});th=Math.max(-4,Math.min(4,th+(s-f)/d))}
+  return th}
+const LV=[['Noob',0],['Beginner',40],['Amateur',120],['Learner',250],['Skilled',450],['Pro',700],['Expert',1000],['Master',1400],['Grandmaster',1900],['Legend',2600]];
+const lvName=(u,xp)=>u.role==='owner'?'Owner':u.role==='admin'?'Admin':LV[lvOf(xp)][0];
+const lvOf=x=>{let i=0;LV.forEach((l,j)=>{if(x>=l[1])i=j});return i};
+const prem=u=>u.role!=='user'||(u.prem||0)>Date.now();
+const used=id=>S.att.filter(a=>a.uid===id&&!(S.tests.find(t=>t.id===a.tid)||{}).oly).length;
+const lt=ms=>new Date(ms-new Date().getTimezoneOffset()*60000).toISOString().slice(0,16);
+const score=th=>Math.round(Math.max(0,Math.min(75,37.5+9*th)));
+const grade=s=>s>=70?'A+':s>=65?'A':s>=60?'B+':s>=55?'B':s>=50?'C+':s>=46?'C':'—';
+function stat(id){const a=S.att.filter(x=>x.uid===id),th=ability(id);return{n:a.length,t:sum(a.map(x=>x.t)),sc:th==null?null:score(th),xp:sum(a.map(x=>sum(x.ok)+10))}}
+
+/* ---------- data ---------- */
+const reqMap=d=>{const x=d.data({serverTimestamps:'estimate'});return{id:d.id,...x,at:x.at?x.at.toMillis():Date.now()}};
+let reqOn=false;
+function startReq(){if(reqOn)return;reqOn=true;unsub.push(onSnapshot(collection(fs,'payreq'),s=>{S.req=s.docs.map(reqMap);rr()},e=>{reqOn=false;console.error(e)}))}
+function listen(){
+  unsub.forEach(f=>f());unsub=[];reqOn=false;
+  const on=(q,fn)=>unsub.push(onSnapshot(q,s=>{fn(s);rr()},e=>console.error(e)));
+  on(collection(fs,'users'),s=>S.users=s.docs.map(d=>({id:d.id,...d.data()})));
+  on(collection(fs,'tests'),s=>S.tests=s.docs.map(d=>{const x=d.data();return{id:d.id,...x,at:x.at.toMillis(),end:x.end?x.end.toMillis():0}}));
+  on(collection(fs,'attempts'),s=>{DC={};S.att=s.docs.map(d=>({id:d.id,...d.data()}))});
+  on(query(collection(fs,'starts'),where('uid','==',uid)),s=>{S.starts={};s.docs.forEach(d=>{const x=d.data({serverTimestamps:'estimate'});if(x.at)S.starts[x.tid]=x.at.toMillis()})});
+  on(doc(fs,'config','pay'),s=>{if(s.exists())S.pay={...S.pay,...s.data()}});
+  on(query(collection(fs,'payreq'),where('uid','==',uid)),s=>{S.mreq=s.docs.map(reqMap)})}
+if(ok_)onAuthStateChanged(auth,u=>{uid=u?u.uid:null;ready=true;if(u)listen();else{unsub.forEach(f=>f());unsub=[];S.users=[];S.tests=[];S.att=[];S.starts={}}view='home';render()});
+const dl=t=>Math.min(S.starts[t.id]+t.dur*60000,t.end||1e15);
+const act=()=>S.tests.find(t=>S.starts[t.id]&&!att(t.id)&&!done.has(t.id)&&dl(t)+45000>Date.now());
+function rr(){const e=document.activeElement;if(act()||(e&&e.matches&&e.matches('textarea,select,input:not([type=radio])')))return;render()}
+
+/* ---------- auth ---------- */
+const AE={'auth/email-already-in-use':'Bu login band.','auth/invalid-credential':'Login yoki parol noto‘g‘ri.','auth/wrong-password':'Login yoki parol noto‘g‘ri.','auth/user-not-found':'Login yoki parol noto‘g‘ri.','auth/too-many-requests':'Urinishlar ko‘p. Birozdan keyin qayta urining.','auth/operation-not-allowed':'Firebase’da Email/Parol kirish yoqilmagan.'};
+window.setMode=m=>{mode=m;msg='';render()};
+window.go=v=>{view=v;flash='';document.body.classList.remove('nav');render();window.scrollTo(0,0)};
+window.logout=()=>signOut(auth);
+window.authGo=async()=>{
+  const lg=$('#lg').value.trim().toLowerCase().replace(/^@/,''),pw=$('#pw').value,r=mode==='reg',nm=r?$('#nm').value.trim():'';
+  form={nm,lg};const fail=m=>{msg=m;render()};
+  if(!/^[a-z0-9_.]{3,30}$/.test(lg))return fail('Login 3–30 belgi: lotin harflari, raqam, _ yoki nuqta.');
+  if(r&&!nm)return fail('Ismingizni yozing.');
+  if(r&&(pw.length<8||!/[a-zA-Z]/.test(pw)||!/\d/.test(pw)))return fail('Parol kamida 8 belgi bo‘lib, harf va raqamni o‘z ichiga olsin.');
+  try{
+    const em=lg+'@mocktest.app';
+    if(!r)await signInWithEmailAndPassword(auth,em,pw);
+    else{
+      const id=(await createUserWithEmailAndPassword(auth,em,pw)).user.uid,first=!(await getDoc(doc(fs,'config','owner'))).exists(),b=writeBatch(fs);
+      b.set(doc(fs,'users',id),{nm,lg,role:first?'owner':'user'});if(first)b.set(doc(fs,'config','owner'),{uid:id});
+      try{await b.commit()}catch(e){await setDoc(doc(fs,'users',id),{nm,lg,role:'user'})}}
+    msg=''}catch(e){fail(AE[e.code]||'Xato: '+e.code)}};
+
+/* ---------- views ---------- */
+function render(){render0();tr($('#app'));tr(document.querySelector('footer'))}
+function render0(){
+  clearInterval(tick);const A=$('#app');
+  if(!ok_){A.innerHTML='<main class="auth"><h1>Firebase ulanmagan</h1><p class="sub" style="margin-top:12px">MS.html ichida CFG qismini Firebase konsolidagi o‘z sozlamalaringiz bilan to‘ldiring.</p></main>';return}
+  if(!ready){A.innerHTML='<main><p class="empty">Yuklanmoqda…</p></main>';return}
+  if(!uid){A.innerHTML=authV();return}
+  const u=me();if(!u){A.innerHTML='<main><p class="empty">Yuklanmoqda…</p></main>';return}
+  const t=act();if(u.role==='owner')startReq();A.innerHTML=t?examV(t):mainV(u);document.body.classList.toggle('sh',!!t&&shOpen);if(t)loadImgs(t);
+  tick=setInterval(()=>{const t=act();
+    if(t){const l=(dl(t)-Date.now())/1000,e=$('#tm');if(e)e.textContent=clock(l);if(l<=0)finish(t,true)}
+    else document.querySelectorAll('.cd').forEach(e=>{const l=(+e.dataset.t-Date.now())/1000;if(l<=0)render();else e.textContent=clock(l)})},1000);
+  if(t&&dl(t)<=Date.now())finish(t,true)}
+function authV(){const r=mode==='reg';return`<main class="auth"><h1>Milliy sertifikat mock test</h1><p class="sub">Milliy sertifikatga tayyorlanayotganlar uchun onlayn testlar</p>
+<div class="seg"><button class="${r?'':'on'}" onclick="setMode('login')">Kirish</button><button class="${r?'on':''}" onclick="setMode('reg')">Ro‘yxatdan o‘tish</button></div>
+${r?`<label>Ism<input id="nm" autocomplete="name" value="${esc(form.nm)}"></label>`:''}
+<label>Login<input id="lg" autocomplete="username" value="${esc(form.lg)}"></label>
+<label>Parol<input id="pw" type="password" autocomplete="${r?'new-password':'current-password'}"></label>
+${r?'<p class="hint">Kamida 8 belgi, harf va raqam bilan.</p>':''}<p class="err">${esc(msg)}</p>
+<button class="btn" onclick="authGo()">${r?'Hisob yaratish':'Kirish'}</button></main>`}
+const IC={test:'<path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><path d="m9 14 2 2 4-4"/>',trophy:'<path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0V4z"/><path d="M17 5h3v2a3 3 0 0 1-3 3M7 5H4v2a3 3 0 0 0 3 3"/>',chart:'<path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/>',crown:'<path d="m3 8 4 4 5-7 5 7 4-4-2 11H5L3 8z"/>',shield:'<path d="M12 3 4 6v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V6l-8-3z"/>'};
+const ic=n=>`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${IC[n]}</svg>`;
+const PG={home:'Mock testlar',oly:'Olimpiada',rating:'Reyting',prem:'Premium',admin:'Admin panel'};
+const nb=(v,t,i)=>`<button class="sl${view===v?' on':''}" onclick="go('${v}')">${ic(i)}<span>${t}</span></button>`;
+function mainV(u){
+  const s=stat(u.id);
+  return`<div class="app"><aside class="side"><div class="brand"><i>M</i><span>Mock test</span></div>
+<div class="sg">Mashq</div>${nb('home','Mock testlar','test')}${nb('oly','Olimpiada','trophy')}${nb('rating','Reyting','chart')}${nb('prem','Premium','crown')}
+${u.role!=='user'?`<div class="sg">Boshqaruv</div>${nb('admin','Admin panel','shield')}`:''}
+<div class="sf"><div class="uc"><div class="av">${esc(u.nm.slice(0,1).toUpperCase())}</div><div><b>${esc(u.nm)}</b><br><i class="role r-${u.role}">${RL[u.role]}</i></div></div>${tbar()}<button class="btn ghost" onclick="logout()">Chiqish</button></div></aside>
+<div class="ov" onclick="togNav()"></div>
+<div><div class="top"><button class="btn ghost burger" onclick="togNav()" aria-label="Menyu">☰</button><span class="crumb">Bosh sahifa › <b>${PG[view]}</b></span><span class="sp"></span><span class="chip${u.role!=='user'?' pm':''}">${lvName(u,s.xp)}</span></div>
+<div class="pg">${flash?`<p class="flash">${esc(flash)}</p>`:''}${view==='home'?homeV(u):view==='rating'?ratingV(u):view==='oly'?olyV(u):view==='prem'?premV(u):adminV(u)}</div></div></div>`}
+function homeV(u){
+  const s=stat(u.id),l=lvOf(s.xp),nx=LV[l+1],h=new Date().getHours(),gr=h<5?'Xayrli tun':h<12?'Xayrli tong':h<18?'Xayrli kun':'Xayrli kech',now=Date.now();
+  const sp=u.role!=='user',pc=nx?Math.round((s.xp-LV[l][1])/(nx[1]-LV[l][1])*100):100,pm=(u.prem||0)>now&&u.role==='user',L=S.tests.filter(t=>!t.oly).sort((a,b)=>a.at-b.at);
+  return`<section class="hero"><div class="wl"><div><p class="sub">${gr}!</p><h1>Xush kelibsiz, ${esc(u.nm)}</h1></div><div class="chips"><span class="chip${u.role!=='user'?' pm':''}">${lvName(u,s.xp)}</span>${pm?`<span class="chip pm">Premium, ${Math.ceil((u.prem-now)/864e5)} kun</span>`:''}</div></div>
+<div class="stats"><div><b>${s.n}</b><span>yechilgan testlar</span></div><div><b>${s.n?span(s.t):'0 daq'}</b><span>ishlangan vaqt</span></div><div><b>${s.sc==null?'—':s.sc}</b><span>Rasch ball, 0–75${s.sc==null?'':', daraja '+grade(s.sc)}</span></div></div>
+<div class="lv"><div class="lvh"><b>${sp?'Maxsus daraja: '+lvName(u,s.xp):(l+1)+'-daraja: '+LV[l][0]}</b><span>${sp?'Sayt boshqaruvchisi':nx?`${s.xp}/${nx[1]} ball. Keyingisi: ${nx[0]}`:'Eng yuqori darajaga erishdingiz!'}</span></div><div class="pb"><i style="width:${sp?100:pc}%"></i></div></div>
+${prem(u)?'':`<p class="hint" style="margin:0">Bepul tarif: ${used(u.id)}/2 test ishlatildi. <button class="lnk" onclick="go('prem')">Premium olish</button></p>`}</section>
+<h2 class="sec">Mock testlar</h2>${L.length?L.map(t=>row(t,u,now)).join(''):'<p class="empty">Hozircha test yo‘q. Admin test qo‘shgach shu yerda ko‘rinadi.</p>'}`}
+function row(t,u,now){
+  const a=att(t.id),st=S.starts[t.id],lock=!t.oly&&!prem(u)&&used(u.id)>=2;let x;
+  if(a)x=`<span class="done">${sum(a.ok)}/${t.q.length} to‘g‘ri, ${span(a.t)}</span>`;
+  else if(st)x='<span class="wait">Vaqt tugagan</span>';
+  else if(t.end&&now>t.end)x='<span class="wait">Test yopilgan</span>';
+  else if(t.at>now)x=`<span class="wait">Boshlanishiga <b class="cd" data-t="${t.at}">${clock((t.at-now)/1000)}</b></span><button class="btn" disabled>Testni boshlash</button>`;
+  else if(lock)x='<span class="wait">Bepul limit (2 ta) tugadi. <button class="lnk" onclick="go(\'prem\')">Premium olish</button></span>';
+  else x=`<button class="btn" onclick="startTest('${t.id}')">Testni boshlash</button>`;
+  return`<div class="row"><div><h3>${esc(t.title)}${t.oly?' <i class="role r-owner">Olimpiada</i>':''}</h3><div class="meta"><span>Boshlanish: ${fd(t.at)}</span>${t.end?`<span>Tugash: ${fd(t.end)}</span>`:''}<span>Ishlash vaqti: ${t.dur} daqiqa</span><span>${t.q.length} ta savol</span></div></div><div class="act">${x}</div></div>`}
+function ratingV(u){
+  const r=S.users.map(x=>({x,...stat(x.id)})).filter(r=>r.n).sort((a,b)=>b.sc-a.sc||a.t-b.t);
+  return`<h1>Reyting</h1><p class="sub">Rasch modeli: qiyin savolga to‘g‘ri javob ko‘proq ball beradi.</p>
+<div class="tw"><table><tr><th></th><th>Ism</th><th>Daraja</th><th>Testlar</th><th>Vaqt</th><th>Ball</th></tr>${r.length?r.map((r,i)=>`<tr class="${r.x.id===u.id?'me':''}"><td class="rk">${i+1}</td><td>${esc(r.x.nm)}</td><td>${lvName(r.x,r.xp)}</td><td>${r.n}</td><td>${span(r.t)}</td><td><b>${r.sc}</b> (${grade(r.sc)})</td></tr>`).join(''):'<tr><td colspan="6" class="empty">Hali hech kim test yechmagan.</td></tr>'}</table></div>`}
+function olyV(u){
+  const L=S.tests.filter(t=>t.oly).sort((a,b)=>b.at-a.at),now=Date.now(),ow=u.role==='owner';
+  return`<h1>Olimpiada</h1><p class="sub">Natijalar to‘g‘ri javoblar soni, keyin sarflangan vaqt bo‘yicha. Olimpiada bepul limitga kirmaydi.</p>${L.length?L.map(t=>{
+    const r=S.att.filter(a=>a.tid===t.id).map(a=>({a,u:S.users.find(x=>x.id===a.uid)})).sort((p,q)=>sum(q.a.ok)-sum(p.a.ok)||p.a.t-q.a.t).slice(0,10);
+    return row(t,u,now)+(r.length?`<div class="tw"><table><tr><th></th><th>Ism</th><th>To‘g‘ri</th><th>Vaqt</th>${ow?'<th>Login</th><th></th>':''}</tr>${r.map((z,i)=>`<tr class="${z.a.uid===u.id?'me':''}"><td class="rk">${i+1}</td><td>${esc(z.u?z.u.nm:'—')}</td><td><b>${sum(z.a.ok)}/${t.q.length}</b></td><td>${span(z.a.t)}</td>${ow?`<td>@${esc(z.u?z.u.lg:'')}</td><td>${i<3&&z.u&&z.u.role==='user'?`<button class="btn ghost" onclick="grant('${z.a.uid}',30)">Premium +30 kun</button>`:''}</td>`:''}</tr>`).join('')}</table></div>`:'')}).join(''):'<p class="empty">Hozircha olimpiada yo‘q.</p>'}`}
+
+const safeImg=d=>/^data:image\/jpeg;base64,[A-Za-z0-9+\/=]+$/.test(String(d))?d:'';
+const som=n=>(Number(n)||0).toLocaleString('ru-RU')+' so‘m';
+const shrink=(f,w,cb)=>{const r=new FileReader();r.onload=()=>{const im=new Image();im.onload=()=>{const sc=Math.min(1,w/im.width),c=document.createElement('canvas');c.width=Math.round(im.width*sc);c.height=Math.round(im.height*sc);const g=c.getContext('2d');g.fillStyle='#fff';g.fillRect(0,0,c.width,c.height);g.drawImage(im,0,0,c.width,c.height);let q=.75,d=c.toDataURL('image/jpeg',q);while(d.length>450000&&q>.3){q-=.1;d=c.toDataURL('image/jpeg',q)}cb(d)};im.src=r.result};r.readAsDataURL(f)};
+const STT={pending:['Kutilmoqda','pe'],ok:['Tasdiqlandi','ok'],no:['Rad etildi','no']};
+function premV(u){
+  const P=S.pay,pr=P.price||10000,my=S.mreq.slice().sort((a,b)=>b.at-a.at),on=u.role==='user'&&(u.prem||0)>Date.now();
+  return`<h1>Premium</h1><p class="sub">Bepul tarifda 2 ta test ishlash mumkin. Premiumda testlar cheksiz.</p>
+${u.role!=='user'?'<p class="flash">Admin va Ownerlarda cheklov yo‘q, premium kerak emas.</p>':''}${on?`<p class="flash">Premium faol: ${fd(u.prem)} gacha.</p>`:''}
+<div class="panel"><h2>${som(pr)} / oy</h2>
+<p class="hint">1) Quyidagi kartaga to‘lov qiling. 2) Chek rasmini shu yerdan yuboring. 3) Owner tasdiqlagach premium yoqiladi.</p>
+<div class="payc"><b>${esc(P.card||'Karta raqami hali kiritilmagan')}</b><span>${esc(P.holder||'')}</span></div>${P.note?`<p class="hint">${esc(P.note)}</p>`:''}
+<label>Necha oyga<select id="pm_m">${[1,3,6,12].map(m=>`<option value="${m}">${m} oy, ${som(pr*m)}</option>`).join('')}</select></label>
+<label>To‘lov chekining rasmi<input type="file" id="pm_f" accept="image/*"></label>
+<label>Izoh (ixtiyoriy: kartangizning oxirgi 4 raqami)<input id="pm_n" maxlength="80"></label>
+<p class="err" id="pm_e"></p><button class="btn" onclick="sendReq()">So‘rov yuborish</button></div>
+<h2 class="sec">So‘rovlarim</h2>${my.length?my.map(r=>`<div class="row"><div><h3>${Number(r.months)||0} oy, ${som(r.amount)}</h3><div class="meta"><span>${fd(r.at)}</span></div></div><span class="st ${(STT[r.status]||['','pe'])[1]}">${(STT[r.status]||['Kutilmoqda'])[0]}</span></div>`).join(''):'<p class="empty">Hali so‘rov yuborilmagan.</p>'}`}
+window.sendReq=()=>{
+  const f=$('#pm_f').files[0],e=$('#pm_e'),m=+$('#pm_m').value,note=$('#pm_n').value.trim().slice(0,80),pr=S.pay.price||10000,u=me();
+  if(!f){e.textContent='Chek rasmini tanlang.';return}
+  e.textContent='Yuborilmoqda…';
+  shrink(f,900,async d=>{try{await setDoc(doc(fs,'payreq',Date.now().toString(36)+uid.slice(0,6).toLowerCase()),{uid,nm:u.nm,lg:u.lg,months:m,amount:pr*m,note,img:d,status:'pending',at:serverTimestamp()});flash='So‘rov yuborildi. Owner tasdiqlashini kuting.';render()}catch(x){const e2=$('#pm_e');if(e2)e2.textContent='Yuborilmadi: '+x.code}})};
+function payAdm(){
+  const P=S.pay,pend=S.req.filter(r=>r.status==='pending').sort((a,b)=>a.at-b.at);
+  return`<div class="panel"><h2>To‘lov sozlamalari</h2>
+<div class="two"><label>Narx (so‘m / oy)<input type="number" id="py_p" value="${esc(P.price||10000)}"></label><label>Karta raqami<input id="py_c" value="${esc(P.card||'')}" placeholder="8600 0000 0000 0000"></label></div>
+<div class="two"><label>Karta egasi<input id="py_h" value="${esc(P.holder||'')}"></label><label>Izoh (ixtiyoriy)<input id="py_n" value="${esc(P.note||'')}"></label></div>
+<button class="btn" style="margin-top:14px" onclick="savePay()">Saqlash</button></div>
+<div class="panel"><h2>Kutilayotgan to‘lovlar (${pend.length})</h2>${pend.length?pend.map(r=>`<div class="rq"><div><b>${esc(r.nm)}</b> @${esc(r.lg)}<div class="meta"><span>${Number(r.months)||0} oy</span><span>${som(r.amount)}</span><span>${fd(r.at)}</span></div>${r.note?`<p class="hint">${esc(r.note)}</p>`:''}<div class="act" style="margin-top:10px"><button class="btn" onclick="okReq('${esc(r.id)}')">Tasdiqlash</button><button class="btn del" onclick="noReq('${esc(r.id)}')">Rad etish</button></div></div><img class="qi" style="max-height:220px" src="${safeImg(r.img)}"></div>`).join(''):'<p class="empty">Hozircha so‘rov yo‘q.</p>'}</div>`}
+window.savePay=async()=>{const price=Math.max(1000,Math.round(+$('#py_p').value)||10000);try{await setDoc(doc(fs,'config','pay'),{price,card:$('#py_c').value.trim().slice(0,40),holder:$('#py_h').value.trim().slice(0,60),note:$('#py_n').value.trim().slice(0,200)});flash='To‘lov sozlamalari saqlandi.';render()}catch(e){alert('Saqlanmadi: '+e.code)}};
+window.okReq=async id=>{
+  const r=S.req.find(x=>x.id===id),u=r&&S.users.find(x=>x.id===r.uid);if(!u)return;
+  const m=Math.min(12,Math.max(1,Number(r.months)||1));if(!confirm(`${u.nm} ga ${m} oy premium beriladi. Davom etasizmi?`))return;
+  const b=writeBatch(fs);b.set(doc(fs,'users',u.id),{prem:Math.max(u.prem||0,Date.now())+m*30*864e5},{merge:true});b.set(doc(fs,'payreq',id),{status:'ok'},{merge:true});
+  try{await b.commit();flash='Premium berildi.';render()}catch(e){alert('Xato: '+e.code)}};
+window.noReq=async id=>{if(!confirm('So‘rov rad etilsinmi?'))return;try{await setDoc(doc(fs,'payreq',id),{status:'no'},{merge:true})}catch(e){alert('Xato: '+e.code)}};
+window.grant=async(id,d)=>{const x=S.users.find(v=>v.id===id);if(!x||!confirm(`${x.nm} ga ${d} kun premium beriladi. Davom etasizmi?`))return;try{await setDoc(doc(fs,'users',id),{prem:Math.max(x.prem||0,Date.now())+d*864e5},{merge:true});flash=`${x.nm} ga ${d} kun premium berildi.`;render()}catch(e){alert('Berilmadi: '+e.code)}};
+
+/* ---------- exam ---------- */
+window.startTest=async id=>{
+  const t=S.tests.find(x=>x.id===id),u=me();if(!t||t.at>Date.now()||(t.end&&Date.now()>t.end)||att(id))return;
+  if(!t.oly&&!prem(u)&&used(u.id)>=2){flash='Bepul tarifda 2 ta test ishlash mumkin. Premium uchun @Vip_chelik1 ga yozing.';render();return}
+  try{await setDoc(doc(fs,'starts',uid+'_'+id),{uid,tid:id,at:serverTimestamp()})}catch(e){flash='Boshlab bo‘lmadi: '+e.code;render()}};
+const imgC={};
+async function loadImgs(t){await Promise.all([...new Set(t.q.map(x=>x.im).filter(Boolean))].map(async k=>{const id=t.id+'_'+k;if(!imgC[id])try{imgC[id]=(await getDoc(doc(fs,'images',id))).data().d}catch(e){}}));document.querySelectorAll('img[data-i]').forEach(e=>{if(imgC[e.dataset.i])e.src=imgC[e.dataset.i]})}
+const WB=[['√','√',0],['a/b','/',0],['xⁿ','^',0],['π','π',0],['( )','()',1],['−','-',0]];
+const norm=v=>String(v).slice(0,80).toLowerCase().replace(/[−–—]/g,'-').replace(/[×·]/g,'*').replace(/÷/g,'/').replace(/π/g,'pi').replace(/²/g,'^2').replace(/³/g,'^3').replace(/[°%]/g,'').replace(/∛\s*\(/g,'cbrt(').replace(/√\s*\(/g,'sqrt(').replace(/√\s*([0-9a-z.]+)/g,'sqrt($1)').replace(/(\d+)\s+(\d+)\s*\/\s*(\d+)/g,'($1+$2/$3)').replace(/(\d),(\d)/g,'$1.$2').replace(/([\d)])\s*(?:kv\.?\s*sm|kub\.?\s*sm|sm|mm|dm|km|kg|sek|min|soat|kun|gradus|foiz|so['‘’]?m|marta|ta|m|g|l|s)\.?$/,'$1').replace(/(\d|\))\s*(sqrt|cbrt|pi|\()/g,'$1*$2').trim();
+const clean=v=>String(v??'').trim().replace(/^(?:javob|ответ|answer)\s*[:=-]?\s*/i,'').replace(/[.;]+$/,'').trim();
+const num=v=>{try{if(/=/.test(v))return null;const r=math.evaluate(norm(v));return typeof r==='number'&&isFinite(r)?r:null}catch(e){return null}};
+const ivl=x=>/^[\[(].*[;,].*[\])]$/.test(x)||(/∞|inf/i.test(x)&&/[\[(]/.test(x));
+const ivn=x=>x.toLowerCase().replace(/\s+/g,'').replace(/[−–—]/g,'-').replace(/∞|infinity|inf/g,'inf').replace(/,/g,';');
+function eqv(x,y){
+  const n1=num(x),n2=num(y);
+  if(n1!=null&&n2!=null)return Math.abs(n1-n2)<=1e-6*Math.max(1,Math.abs(n2));
+  try{
+    const e1=math.parse(norm(x)),e2=math.parse(norm(y)),vs=new Set();
+    [e1,e2].forEach(e=>e.traverse(n=>{if(n.isSymbolNode&&!(n.name in math))vs.add(n.name)}));
+    if(vs.size&&vs.size<=3){
+      const V=[...vs],P=[.7,1.3,2.1,-1.7,3.3,.2,-.4];let ok=0;
+      for(let k=0;k<7;k++){const sc={};V.forEach((v,i)=>sc[v]=P[(k+i*2)%7]);const a=e1.evaluate(sc),b=e2.evaluate(sc);
+        if(typeof a!=='number'||typeof b!=='number'||!isFinite(a)||!isFinite(b))continue;
+        if(Math.abs(a-b)>1e-6*Math.max(1,Math.abs(b)))return false;ok++}
+      if(ok>=3)return true}
+  }catch(e){}
+  const sn=z=>norm(z).replace(/\s+/g,'');return sn(x)===sn(y)}
+function one(x,y){
+  const L=z=>{const m=z.match(/^\s*([a-zA-Zа-яА-Я]\w*)\s*=\s*(.+)$/);return m?[m[1].toLowerCase(),m[2]]:[null,z]};
+  const[a,p]=L(x),[b,q]=L(y);if(a&&b&&a!==b)return false;return eqv(p,q)}
+const spl=z=>z.split(/\s*;\s*|\s+(?:va|yoki|и|or|and)\s+|,\s+/).map(x=>x.trim()).filter(Boolean);
+function same(a,b){
+  a=clean(a);b=clean(b);if(!a||!b)return false;
+  if(ivl(a)||ivl(b))return ivn(a)===ivn(b);
+  const A=spl(a),B=spl(b);
+  if(A.length>1||B.length>1){if(A.length!==B.length)return false;const used=new Set();return A.every(x=>{const j=B.findIndex((y,i)=>!used.has(i)&&one(x,y));if(j<0)return false;used.add(j);return true})}
+  return one(a,b)}
+function chk(ans,keys){ans=String(ans??'').trim();if(!ans)return 0;return String(keys).split('\n').some(k=>same(ans,k))?1:0}
+const wPrev=(v,l='Siz yozdingiz: ')=>{if(!String(v||'').trim())return'';try{return l+katex.renderToString(math.parse(norm(v)).toTex(),{throwOnError:false})}catch(e){return'<span style="opacity:.6">…</span>'}};
+function examV(t){
+  const A=getA(t.id),l=(dl(t)-Date.now())/1000;let gl=null;
+  const im=q=>q.im?`<img class="qi" data-i="${t.id}_${q.im}">`:'';
+  const qs=t.q.map((q,i)=>{
+    const w=q.k==='w',g=w?parseInt(q.n):0,n=q.n||i+1;let h='';
+    if(w){if(g!==gl){gl=g;h=`<p class="gh">${g}-savol</p>`+im(q)}}else{gl=null;h=im(q)}
+    const head=w?`<p><b>${String(n).slice(-1)})</b> ${M(q.s)}</p>`:`<p><b class="qn">${n}.</b> ${M(q.s)}</p>`;
+    const ops=w?'':q.o.map((o,j)=>`<div class="op"><b>${'ABCD'[j]}.</b><span>${M(o)}</span></div>`).join('');
+    return`<div class="q${A[i]!==undefined?' ans':''}" id="q${i}">${h}${head}${ops}</div>`}).join('');
+  const rows=t.q.map((q,i)=>{const n=q.n||i+1;
+    if(q.k==='w')return`<div class="sw"><div class="t2"><button class="sn" onclick="goQ(${i})">${n}</button><input class="wi" id="w${i}" value="${esc(A[i]||'')}" oninput="wIn('${t.id}',${i},this.value)" placeholder="Javobingiz" autocomplete="off"></div><div class="tools">${WB.map((b,j)=>`<button type="button" onmousedown="event.preventDefault()" onclick="wIns(${i},'${t.id}',${j})">${b[0]}</button>`).join('')}</div><div class="wp" id="wp${i}">${wPrev(A[i])}</div></div>`;
+    return`<div class="sr"><button class="sn" onclick="goQ(${i})">${n}</button><div class="pills">${[0,1,2,3].map(j=>`<label class="pill"><input type="radio" name="s${i}" ${A[i]===j?'checked':''} onchange="pick('${t.id}',${i},${j})"><span>${'ABCD'[j]}</span></label>`).join('')}</div></div>`}).join('');
+  return`<div class="bar"><div class="in"><div><h3>${esc(t.title)}</h3><span class="sub">Qolgan vaqt</span></div><span id="tm">${clock(l)}</span><div class="act"><button class="btn ghost" onclick="togSheet()">Javoblar varag‘i</button><button class="btn" onclick="fin('${t.id}')">Testni yakunlash</button></div></div></div>
+<div class="xwrap"><div class="xq">${qs}<p class="hint" style="margin:18px 0">Yozma javobni son yoki ifoda ko‘rinishida yozing: 1/2, √2/2, 2π. Javoblar varag‘ini yuqoridagi tugma bilan ochasiz.</p></div>
+<aside class="sheet" id="sheet"><div class="sh-h"><b>Javoblar varag‘i</b><span class="sub">Javob berilgan: <span id="cnt">${Object.keys(A).length}</span>/${t.q.length}</span></div>${rows}</aside></div>`}
+const sv=(id,A)=>{localStorage.setItem('ans_'+id,JSON.stringify(A));$('#cnt').textContent=Object.keys(A).length};
+const mark=(i,on)=>{const e=document.getElementById('q'+i);if(e)e.classList.toggle('ans',on)};
+window.pick=(id,i,j)=>{const A=getA(id);A[i]=j;sv(id,A);mark(i,true)};
+window.wIn=(id,i,v)=>{const A=getA(id);if(v.trim())A[i]=v;else delete A[i];sv(id,A);const p=$('#wp'+i);p.innerHTML=wPrev(v);tr(p);mark(i,!!v.trim())};
+window.wIns=(i,id,j)=>{const e=$('#w'+i),[,x,b]=WB[j],a=e.selectionStart;e.setRangeText(x,a,e.selectionEnd,'end');if(b)e.setSelectionRange(a+x.length-b,a+x.length-b);e.focus();wIn(id,i,e.value)};
+window.fin=id=>{if(confirm('Testni yakunlaysizmi?'))finish(S.tests.find(t=>t.id===id),false)};
+async function finish(t,auto){
+  if(done.has(t.id))return;done.add(t.id);
+  const A=getA(t.id),ans=t.q.map((q,i)=>A[i]??(q.k==='w'?'':-1)),id=uid+'_'+t.id,el=Math.min(Math.round((Date.now()-S.starts[t.id])/1000),t.dur*60);
+  try{
+    await setDoc(doc(fs,'answers',id),{uid,tid:t.id,ans});
+    const c=(await getDoc(doc(fs,'keys',t.id))).data().c,ok=ans.map((x,i)=>t.q[i].k==='w'?chk(x,String(c[i])):+(x===c[i]));
+    await setDoc(doc(fs,'attempts',id),{uid,tid:t.id,ok,t:el,at:serverTimestamp()});
+    localStorage.removeItem('ans_'+t.id);flash=(auto?'Vaqt tugadi. ':'')+`Natija: ${sum(ok)}/${ok.length} to‘g‘ri javob.`
+  }catch(e){flash='Natijani yuborib bo‘lmadi: '+e.code}
+  view='home';render()}
+
+/* ---------- admin ---------- */
+const SN=[['√','$\\sqrt{}$'],['∛','$\\sqrt[3]{}$'],['a/b','$\\frac{}{}$'],['x²','$x^{2}$'],['xₙ','$x_{n}$'],['∫','$\\int_{}^{} \\,dx$'],['∑','$\\sum_{k=1}^{n}$'],['lim','$\\lim_{x\\to 0}$'],['log','$\\log_{2}{}$'],['sin','$\\sin x$'],['π','$\\pi$'],['≤','$\\le$'],['≥','$\\ge$'],['≠','$\\ne$'],['∞','$\\infty$'],['°','$^{\\circ}$']];
+const SL=[];for(let n=1;n<=35;n++)SL.push({id:''+n,k:'mc',n});for(let n=36;n<=45;n++)['a','b'].forEach(p=>SL.push({id:n+p,k:'w',n,p}));
+const NEW=()=>({tt:'',ta:'',td:60,it:{},im:{},sel:'1',te:'',oly:false,eid:''});let lastF=null;
+const slot=id=>SL.find(x=>x.id===id),ik=x=>x.k==='mc'?x.id:''+x.n;
+const gi=id=>draft.it[id]||(draft.it[id]={s:'',o:['','','',''],c:-1,a:''});
+const filled=x=>{const v=draft.it[x.id];return!!v&&!!(v.s.trim()||v.o.some(o=>o.trim())||v.a.trim()||(x.k==='mc'&&draft.im[x.id]))};
+document.addEventListener('focusin',e=>{if(e.target.matches&&e.target.matches('[data-f]'))lastF=e.target});
+window.ins=i=>{let z=SN[i][1];const t=lastF&&document.contains(lastF)?lastF:$('[data-f]'),a=t.selectionStart;if((t.value.slice(0,a).match(/\$/g)||[]).length%2)z=z.slice(1,-1);t.setRangeText(z,a,t.selectionEnd,'end');const k=z.indexOf('{}');if(k>=0)t.setSelectionRange(a+k+1,a+k+1);t.focus();t.dispatchEvent(new Event('input'))};
+window.dr=(k,v)=>{draft[k]=v};
+window.selSlot=id=>{draft.sel=id;render()};
+window.setF=(k,v)=>{gi(draft.sel)[k]=v;$('#pv').innerHTML=pvSlot();if(k==='a')$('#ap').innerHTML=wPrev(v.split('\n')[0],'Sayt shunday tushunadi: ')};
+window.setO=(j,v)=>{gi(draft.sel).o[j]=v;$('#pv').innerHTML=pvSlot()};
+window.setC=j=>{gi(draft.sel).c=j;$('#pv').innerHTML=pvSlot()};
+window.rmImg=k=>{delete draft.im[k];render()};
+window.upImg=(k,inp)=>{const f=inp.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{const im=new Image();im.onload=()=>{const sc=Math.min(1,900/im.width),c=document.createElement('canvas');c.width=Math.round(im.width*sc);c.height=Math.round(im.height*sc);const g=c.getContext('2d');g.fillStyle='#fff';g.fillRect(0,0,c.width,c.height);g.drawImage(im,0,0,c.width,c.height);let q=.8,d=c.toDataURL('image/jpeg',q);while(d.length>600000&&q>.3){q-=.1;d=c.toDataURL('image/jpeg',q)}draft.im[k]=d;render()};im.src=r.result};r.readAsDataURL(f)};
+function pvSlot(){const x=slot(draft.sel),v=gi(x.id),im=draft.im[ik(x)];
+  return(im?`<img class="qi" src="${im}">`:'')+`<p>${x.k==='mc'?x.id+'. ':'<b>'+x.p+')</b> '}${M(v.s)}</p>`+(x.k==='mc'?v.o.map((o,j)=>`<div class="pv${v.c===j?' ok':''}"><b>${'ABCD'[j]}.</b> ${M(o)}</div>`).join(''):`<p class="hint">To‘g‘ri javob: ${esc(v.a.split('\n')[0]||'—')}</p>`)}
+function slotV(){
+  const x=slot(draft.sel),v=gi(x.id),k=ik(x),im=draft.im[k],w=x.k==='w';
+  return`<h3>${w?x.n+'-savol, '+x.p+')':x.id+'-savol'}</h3>
+<div class="imgb">${im?`<img class="qi" src="${im}">`:''}<div class="act"><label class="btn ghost up">${im?'Rasmni almashtirish':'Rasm joylash'}<input type="file" accept="image/*" hidden onchange="upImg('${k}',this)"></label>${im?`<button class="btn del" onclick="rmImg('${k}')">Rasmni olib tashlash</button>`:''}</div>${w?`<p class="hint">Rasm ${x.n}-savolning a) va b) qismlari uchun umumiy.</p>`:''}</div>
+<div class="tools">${SN.map((z,i)=>`<button type="button" onmousedown="event.preventDefault()" onclick="ins(${i})">${z[0]}</button>`).join('')}</div>
+<p class="hint" style="margin-top:6px">Formulani ichma-ich qo‘shish mumkin: masalan avval a/b ni, keyin kasr ichida √ ni bosing.</p>
+<div class="pre">${w?`<b>${x.p})</b>`:''}<textarea data-f rows="3" oninput="setF('s',this.value)" placeholder="Savol matnini yozing. Formulalar uchun yuqoridagi tugmalardan foydalaning.">${esc(v.s)}</textarea></div>
+${w?`<label>To‘g‘ri javob<textarea rows="2" oninput="setF('a',this.value)" placeholder="Masalan: √3/2">${esc(v.a.split("\n")[0])}</textarea></label><div class="wp" id="ap">${wPrev(v.a.split("\n")[0],"Sayt shunday tushunadi: ")}</div><p class="hint">Javobni oddiy yozing: √2/2 (ildiz osti 2 taqsim 2), 1/2, 2π. Sayt qiymatini hisoblab solishtiradi, shuning uchun 1/2, 0.5 va 2/4 bir xil hisoblanadi. Boshqa yozilish shakllari bo‘lsa, har birini yangi qatordan yozing. Oraliq yoki tenglama bo‘lsa, aynan shu ko‘rinishda solishtiriladi.</p>`
+ :v.o.map((o,j)=>`<div class="orow"><label class="rd"><input type="radio" name="cc" ${v.c===j?'checked':''} onchange="setC(${j})"><b>${'ABCD'[j]}</b></label><input data-f value="${esc(o)}" oninput="setO(${j},this.value)" placeholder="${'ABCD'[j]} javobi"></div>`).join('')+'<p class="hint">To‘g‘ri javobni chap tomondagi doira bilan belgilang.</p>'}
+<h3 style="margin-top:16px">Ko‘rinishi</h3><div id="pv">${pvSlot()}</div>`}
+async function pdfText(f){
+  pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+  const pdf=await pdfjsLib.getDocument({data:await f.arrayBuffer()}).promise;let out='';
+  for(let p=1;p<=pdf.numPages;p++){const c=await(await pdf.getPage(p)).getTextContent();let y=null,ln='';
+    c.items.forEach(it=>{const yy=Math.round(it.transform[5]);if(y!==null&&Math.abs(yy-y)>3){out+=ln.trim()+'\n';ln=''}y=yy;ln+=it.str+' '});out+=ln.trim()+'\n'}
+  return out}
+function parseQ(txt){
+  txt=txt.replace(/[ \t]+/g,' ');const st=[];let pos=0;
+  for(let k=1;k<=45;k++){const m=new RegExp('(?:^|\\n)\\s*'+k+'\\s*[.)]\\s+','g');m.lastIndex=pos;const r=m.exec(txt);if(r){st.push([k,r.index,r.index+r[0].length]);pos=r.index+r[0].length}}
+  const res={};st.forEach(([k,a,b],i)=>{res[k]=txt.slice(b,i+1<st.length?st[i+1][1]:txt.length).replace(/\s*\n\s*/g,' ').trim()});return res}
+function splitOpt(b){
+  const re=/(?:^|\s)([A-D])[.)]\s*/g,ix=[];let m,w=0;
+  while(m=re.exec(b)){if(m[1]==='ABCD'[w]){ix.push({i:m.index,e:m.index+m[0].length});w++;if(w===4)break}}
+  if(ix.length<4)return null;
+  return{s:b.slice(0,ix[0].i).trim(),o:ix.map((x,j)=>b.slice(x.e,j<3?ix[j+1].i:b.length).trim())}}
+function fillQ(res,key){
+  let n=0,first='';const bad=[],put=(id,v)=>{Object.assign(gi(id),v);if(!first)first=id;n++};
+  for(let k=1;k<=35;k++){const b=res[k];if(!b)continue;const o=splitOpt(b);
+    if(o)put(''+k,{s:o.s,o:o.o,c:key[k]!==undefined?key[k]:-1,a:''});else{put(''+k,{s:b,o:['','','',''],c:-1,a:''});bad.push(k)}}
+  for(let k=36;k<=45;k++){const b=res[k];if(!b)continue;const ms=[...b.matchAll(/(?:^|\s)([ab])\)\s*/g)];
+    if(!ms.length){put(k+'a',{s:b,a:''});continue}
+    const seg=i=>b.slice(ms[i].index+ms[i][0].length,i+1<ms.length?ms[i+1].index:b.length).trim(),intro=b.slice(0,ms[0].index).trim();
+    ms.slice(0,2).forEach((m,i)=>put(k+m[1],{s:(i===0&&intro?intro+' ':'')+seg(i),a:''}))}
+  return{n,bad,first}}
+const KRE=()=>/(?:^|[\s,;(])(\d{1,2})\s*[-.:)]?\s*([A-Da-d])(?=[\s,;.]|$)/g;
+function splitKey(txt){
+  const ms=[...txt.matchAll(KRE())];let best=[];
+  ms.forEach((m,i)=>{if(+m[1]!==1)return;const ch=[m];let w=2;for(let j=i+1;j<ms.length;j++)if(+ms[j][1]===w){ch.push(ms[j]);w++}if(ch.length>best.length)best=ch});
+  if(best.length<5)return{body:txt,key:{}};
+  const key={};best.forEach(m=>key[+m[1]]='ABCD'.indexOf(m[2].toUpperCase()));
+  const cut=best[0].index;return{body:cut>txt.length*.3?txt.slice(0,cut):txt,key}}
+function keyOnly(txt){const key={};[...txt.matchAll(KRE())].forEach(m=>{if(key[+m[1]]===undefined)key[+m[1]]='ABCD'.indexOf(m[2].toUpperCase())});return key}
+window.importPdf=async()=>{
+  const f=$('#pdff').files[0],f2=$('#pdfk2').files[0],ie=$('#ie');if(!f){ie.textContent='Avval PDF faylni tanlang.';return}
+  if(SL.some(filled)&&!confirm('Kiritilgan savollar ustidan yoziladi. Davom etasizmi?'))return;
+  const typed=keyOnly($('#pdfk').value);
+  ie.textContent='O‘qilmoqda…';
+  try{
+    const sk=splitKey(await pdfText(f));let key={...sk.key,...typed};
+    if(f2)key={...key,...keyOnly(await pdfText(f2))};
+    const r=fillQ(parseQ(sk.body),key),nk=Object.keys(key).length;
+    if(!r.n){ie.textContent='Savol topilmadi. PDF skanerlangan rasm bo‘lishi mumkin: bunday faylni o‘qib bo‘lmaydi.';return}
+    draft.sel=r.first;render();
+    $('#ie').textContent=`${r.n} ta savol o‘qildi, ${nk} ta javob kaliti topildi. Hammasini tekshirib chiqing.${r.bad.length?` Variantlari ajratilmagan savollar: ${r.bad.join(', ')}.`:''}`
+  }catch(e){ie.textContent='PDF o‘qilmadi: '+(e.message||e)}};
+window.setTab=k=>{tab=k;if(k==='prem')startReq();render()};
+window.cancelEdit=()=>{draft=NEW();render()};
+function adminV(u){
+  if(u.role==='user')return'<p class="empty">Bu bo‘lim faqat adminlar uchun.</p>';
+  if(tab!=='tests'&&u.role!=='owner')tab='tests';
+  const tb=(k,t)=>`<button class="btn ${tab===k?'':'ghost'}" onclick="setTab('${k}')">${t}</button>`;
+  return`<h1>Admin panel</h1><div class="act" style="margin-top:16px">${tb('tests','Mock testlar')}${u.role==='owner'?tb('users','Foydalanuvchilar')+tb('prem','Premium'+(S.req.some(r=>r.status==='pending')?` (${S.req.filter(r=>r.status==='pending').length})`:'')):''}</div>${tab==='tests'?testsAdm():tab==='users'?usersAdm():premAdm()}`}
+function testsAdm(){
+  const gr=a=>a.map(x=>`<button class="g${x.id===draft.sel?' on':''}${filled(x)?' f':''}" onclick="selSlot('${x.id}')">${x.id}</button>`).join(''),own=me().role==='owner';
+  return`<div class="panel"><h2>${draft.eid?'Testni tahrirlash':'Yangi mock test'}</h2>${draft.eid?'<p class="hint">Tahrirlash rejimi. <button class="lnk" onclick="cancelEdit()">Bekor qilish</button></p>':''}
+<label>Test nomi<input value="${esc(draft.tt)}" oninput="dr('tt',this.value)" placeholder="Masalan: Matematika, 1-mock"></label>
+<div class="two"><label>Test boshlanish vaqti<input type="datetime-local" value="${esc(draft.ta)}" oninput="dr('ta',this.value)"></label><label>Test tugash vaqti<input type="datetime-local" value="${esc(draft.te)}" oninput="dr('te',this.value)"></label></div>
+<div class="two"><label>Ishlash vaqti (daqiqa)<input type="number" min="1" value="${esc(draft.td)}" oninput="dr('td',this.value)"></label>${own?`<label class="ck"><input type="checkbox" ${draft.oly?'checked':''} onchange="dr('oly',this.checked)"> Olimpiada sifatida</label>`:'<span></span>'}</div>
+<p class="hint">Boshlanish vaqtigacha “Testni boshlash” tugmasi yopiq turadi. Tugash vaqtidan keyin test boshlab bo‘lmaydi va ishlayotganlarning vaqti ham shu paytda tugaydi. Ishlash vaqti har bir foydalanuvchi uchun alohida hisoblanadi.</p>
+<div class="pdfb"><h3>PDF dan savollarni o‘qish</h3><p class="hint">Test PDF faylini tanlang, sayt savollar va A–D variantlarni o‘zi ajratadi. Javoblar kaliti PDF oxirida (1.A 2.C 3.B ...) yozilgan bo‘lsa, uni ham o‘zi topadi. Keyin har bir raqamni ochib tekshirasiz. Formulalar, rasmlar va to‘g‘ri javoblarni ko‘pincha qo‘lda tuzatish kerak bo‘ladi.</p>
+<input type="file" id="pdff" accept="application/pdf"><label>Javoblar kaliti PDF (ixtiyoriy, alohida fayl bo‘lsa)<input type="file" id="pdfk2" accept="application/pdf"></label>
+<label>Yoki kalitni yozing (ixtiyoriy)<input id="pdfk" placeholder="1.A 2.C 3.B ..."></label>
+<div class="act" style="margin-top:10px"><button class="btn ghost" onclick="importPdf()">PDF ni o‘qish</button></div><p class="hint" id="ie"></p></div>
+<h3 style="margin-top:22px">Test savollari (1–35)</h3><div class="grid">${gr(SL.filter(x=>x.k==='mc'))}</div>
+<h3 style="margin-top:16px">Yozma savollar (36–45)</h3><div class="grid">${gr(SL.filter(x=>x.k==='w'))}</div>
+<p class="hint">Yashil raqamlar to‘ldirilgan. Bo‘sh qoldirilgan raqamlar testga kirmaydi.</p>
+<div class="ed">${slotV()}</div>
+<p class="err" id="er"></p><button class="btn" onclick="addTest()">${draft.eid?'O‘zgarishlarni saqlash':'Testni saqlash'}</button></div>
+<h2 class="sec">Mavjud testlar</h2>${S.tests.length?S.tests.map(t=>`<div class="row"><div><h3>${esc(t.title)}${t.oly?' <i class="role r-owner">Olimpiada</i>':''}</h3><div class="meta"><span>Boshlanish: ${fd(t.at)}</span>${t.end?`<span>Tugash: ${fd(t.end)}</span>`:''}<span>${t.dur} daqiqa</span><span>${t.q.length} ta savol</span><span>Topshirganlar: ${S.att.filter(a=>a.tid===t.id).length}</span></div></div><div class="act"><button class="btn ghost" onclick="editTest('${t.id}')">Tahrirlash</button><button class="btn del" onclick="delTest('${t.id}')">O‘chirish</button></div></div>`).join(''):'<p class="empty">Hali test qo‘shilmagan.</p>'}`}
+window.editTest=async id=>{
+  const t=S.tests.find(x=>x.id===id);if(!t)return;
+  try{
+    const c=(await getDoc(doc(fs,'keys',id))).data().c,d=NEW();
+    Object.assign(d,{eid:id,tt:t.title,ta:lt(t.at),te:t.end?lt(t.end):'',td:t.dur,oly:!!t.oly});
+    t.q.forEach((q,i)=>{d.it[q.n]=q.k==='w'?{s:q.s,o:['','','',''],c:-1,a:String(c[i])}:{s:q.s,o:q.o,c:c[i],a:''}});
+    await Promise.all([...new Set(t.q.map(q=>q.im).filter(Boolean))].map(async k=>{d.im[k]=(await getDoc(doc(fs,'images',id+'_'+k))).data().d}));
+    draft=d;tab='tests';flash='';render();scrollTo(0,0)
+  }catch(e){alert('Yuklanmadi: '+e.code)}};
+window.addTest=async()=>{
+  const q=[],c=[],imgs={},bad=[],e=$('#er');
+  SL.forEach(x=>{
+    if(!filled(x))return;const v=draft.it[x.id],k=ik(x),im=draft.im[k]?k:'';
+    if(x.k==='mc'){if(!(v.s.trim()||im)||v.o.some(o=>!o.trim())||v.c<0){bad.push(x.id);return}q.push({n:x.id,k:'mc',s:v.s.trim(),o:v.o.map(o=>o.trim()),im});c.push(v.c)}
+    else{if(!v.s.trim()||!v.a.trim()){bad.push(x.id);return}q.push({n:x.id,k:'w',s:v.s.trim(),im});c.push(v.a.trim())}
+    if(im)imgs[k]=draft.im[k]});
+  const at=new Date(draft.ta).getTime(),end=draft.te?new Date(draft.te).getTime():0,dur=Math.round(+draft.td);
+  const err=!draft.tt.trim()?'Test nomini yozing.':isNaN(at)?'Boshlanish vaqtini tanlang.':end&&end<=at?'Tugash vaqti boshlanishdan keyin bo‘lishi kerak.':!(dur>0)?'Ishlash vaqtini kiriting.':bad.length?`To‘liq emas: ${bad.join(', ')}. Test savolida matn, to‘rtta javob va to‘g‘ri javob belgisi, yozma savolda matn va to‘g‘ri javob bo‘lishi kerak.`:q.length?'':'Kamida bitta savol kiriting.';
+  if(err){e.textContent=err;return}
+  const id=draft.eid||doc(collection(fs,'tests')).id,b=writeBatch(fs),old=draft.eid?S.tests.find(t=>t.id===id):null;
+  b.set(doc(fs,'tests',id),{title:draft.tt.trim(),at:Timestamp.fromMillis(at),...(end?{end:Timestamp.fromMillis(end)}:{}),dur,q,oly:!!draft.oly&&me().role==='owner',by:uid});
+  b.set(doc(fs,'keys',id),{c});
+  Object.entries(imgs).forEach(([k,d])=>b.set(doc(fs,'images',id+'_'+k),{d}));
+  if(old)old.q.map(x=>x.im).filter(k=>k&&!imgs[k]).forEach(k=>b.delete(doc(fs,'images',id+'_'+k)));
+  try{await b.commit()}catch(x){e.textContent='Saqlanmadi: '+x.code;return}
+  flash=draft.eid?'Test yangilandi.':'Test saqlandi.';draft=NEW();render()};
+window.delTest=async id=>{
+  if(!confirm('Test o‘chiriladi. Foydalanuvchilarning natijalari reytingda saqlanib qoladi. Davom etasizmi?'))return;
+  const t=S.tests.find(x=>x.id===id),b=writeBatch(fs);b.delete(doc(fs,'tests',id));b.delete(doc(fs,'keys',id));
+  new Set(t.q.map(x=>x.im).filter(Boolean)).forEach(k=>b.delete(doc(fs,'images',id+'_'+k)));
+  try{await b.commit()}catch(e){alert('O‘chirilmadi: '+e.code)}};
+function usersAdm(){return`<div class="panel"><h2>Foydalanuvchilar va rollar</h2><p class="hint">Adminni tanlang yoki uni Owner qiling. Owner qilingan odamning rolini hech kim o‘zgartira olmaydi.</p>
+<div class="tw"><table><tr><th>Ism</th><th>Login</th><th>Rol</th></tr>${S.users.map(x=>`<tr><td>${esc(x.nm)}</td><td>@${esc(x.lg)}</td><td>${x.role==='owner'?'<b>Owner</b> (o‘zgarmaydi)':`<select aria-label="Rol" onchange="setRole('${x.id}',this.value)">${['user','admin','owner'].map(r=>`<option value="${r}" ${x.role===r?'selected':''}>${RL[r]}</option>`).join('')}</select>`}</td></tr>`).join('')}</table></div></div>`}
+window.setRole=async(id,r)=>{
+  if(me().role!=='owner')return;
+  if(r==='owner'&&!confirm('Owner bo‘lgan odamning rolini keyin hech kim o‘zgartira olmaydi. Davom etasizmi?'))return render();
+  try{await setDoc(doc(fs,'users',id),{role:r},{merge:true})}catch(e){alert('Rol o‘zgarmadi: '+e.code)}};
+function premAdm(){return payAdm()+premUsers()}
+function premUsers(){const now=Date.now();return`<div class="panel"><h2>Premium</h2><p class="hint">Bepul foydalanuvchi 2 ta test ishlay oladi. Premium berilsa, belgilangan muddat davomida cheklov yo‘q. Admin va Ownerlarda cheklov yo‘q.</p>
+<div class="tw"><table><tr><th>Ism</th><th>Holat</th><th>Kun</th><th></th></tr>${S.users.filter(x=>x.role==='user').map(x=>{const l=(x.prem||0)-now;return`<tr><td>${esc(x.nm)}<br><span class="sub">@${esc(x.lg)}</span></td><td>${l>0?'Faol, '+Math.ceil(l/864e5)+' kun qoldi':'Yo‘q'}</td><td><input type="number" min="1" value="7" id="pd_${x.id}" style="width:80px;margin:0"></td><td class="act"><button class="btn" onclick="setPrem('${x.id}',0)">Belgilash</button><button class="btn ghost" onclick="setPrem('${x.id}',1)">Qo‘shish</button>${l>0?`<button class="btn del" onclick="setPrem('${x.id}',-1)">Bekor qilish</button>`:''}</td></tr>`}).join('')||'<tr><td colspan="4" class="empty">Oddiy foydalanuvchilar yo‘q.</td></tr>'}</table></div>
+<p class="hint">Belgilash: bugundan boshlab shuncha kun. Qo‘shish: mavjud muddatga qo‘shadi.</p></div>`}
+window.setPrem=async(id,m)=>{
+  const x=S.users.find(v=>v.id===id),el=$('#pd_'+id),d=Math.max(1,Math.round(+(el&&el.value)||7)),base=m===1?Math.max(x.prem||0,Date.now()):Date.now();
+  try{await setDoc(doc(fs,'users',id),{prem:m===-1?0:base+d*864e5},{merge:true});flash='Premium yangilandi.';render()}catch(e){alert('Saqlanmadi: '+e.code)}};
+
+render();
+</script>
+</body>
+</html>

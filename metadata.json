@@ -1,0 +1,6 @@
+{
+  "name": "Milliy Sertifikat — Mock Test va Attestatsiya",
+  "description": "Milliy sertifikat mock testlari, ustozlar attestatsiyasi, Rasch modeli bo‘yicha testlar kesimida reyting, PDF savol importi va pullik testlar platformasi.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

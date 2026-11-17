@@ -1,0 +1,659 @@
+{
+  "users": [
+    {
+      "id": "u_owner",
+      "nm": "Sherbek",
+      "lg": "sherbek_01",
+      "role": "owner",
+      "prem": 2110210479135,
+      "school": "",
+      "subject": "",
+      "passwordHash": "dfa7d5493f433b53ac15241907fa2282:9dfaa44d6f1a1ead5253d92c490cb744f19b59d5497e60ff6e9e92329554e18e28c6e03e5b7b043013894c85a1cb207017a5d9455cf01e60f3e9b59383cded30",
+      "needsOwnerPasswordClaim": false
+    },
+    {
+      "id": "u_859883965193",
+      "nm": "ivhvk",
+      "lg": "yoyo2112.2",
+      "role": "user",
+      "prem": 0,
+      "passwordHash": "f173dbe3ea17f8f831ec8c608521b5c5:bc828d49ebbc40fe14603ae89eae7004784f24ecd87c912c1340d0b48236688c16e871b08c7430a413e9218ee6e2527efe7a61ed56a0d3ef1add573660cb95a0",
+      "unlockedTests": [],
+      "school": "1-son Ixtisoslashtirilgan maktab",
+      "subject": "Matematika",
+      "avatar": ""
+    },
+    {
+      "id": "u_e295cc54a667",
+      "nm": "Sherbek",
+      "lg": "sherbek_02",
+      "role": "user",
+      "prem": 0,
+      "passwordHash": "df50f8c31e55c7a8f35b9cf57387b83e:df074d4ded118ddbdf6390c16f9200effd85228c61e529a9c7ef10a5d185e47ff52cb984d76a9a10742e86ee827cf1c9d7ddeff293491e3da046d33b1a3fed6e",
+      "unlockedTests": []
+    }
+  ],
+  "tests": [
+    {
+      "id": "t_3cb8c0b750",
+      "title": "Matematika: Mock test",
+      "category": "mock",
+      "subject": "Matematika",
+      "at": 1794853025341,
+      "end": 0,
+      "isLifetime": true,
+      "dur": 90,
+      "isUnlimitedTime": false,
+      "price": 0,
+      "q": [
+        {
+          "n": "1",
+          "k": "mc",
+          "s": "$x^{2} - 20x + 96 = 0$ kvadrat tenglamaning ildizlari yig‘indisini toping.",
+          "o": [
+            "20",
+            "22",
+            "18",
+            "96"
+          ],
+          "c": 0,
+          "topic": "Kvadrat tenglama",
+          "explanation": "Viyet teoremasiga ko‘ra $x_1 + x_2 = 20$."
+        },
+        {
+          "n": "2",
+          "k": "mc",
+          "s": "$\\log_{2}{(8 \\cdot 2)}$ ifodaning qiymatini hisoblang.",
+          "o": [
+            "3",
+            "4",
+            "5",
+            "6"
+          ],
+          "c": 1,
+          "topic": "Logarifm",
+          "explanation": "$8 \\cdot 2 = 2^{4}$, demak qiymati $4$."
+        },
+        {
+          "n": "3",
+          "k": "mc",
+          "s": "Arifmetik progressiyada $a_1 = 11$ va $d = 10$ bo‘lsa, $a_{8}$ hadini toping.",
+          "o": [
+            "91",
+            "71",
+            "81",
+            "81 + 1"
+          ],
+          "c": 2,
+          "topic": "Progressiya",
+          "explanation": "$a_{8} = 11 + (8-1)\\cdot10 = 81$."
+        },
+        {
+          "n": "4",
+          "k": "mc",
+          "s": "To‘g‘ri burchakli uchburchakning katetlari $3$ sm va $4$ sm bo‘lsa, gipotenuzasini (sm) toping.",
+          "o": [
+            "7",
+            "4",
+            "5 + 1",
+            "5"
+          ],
+          "c": 3,
+          "topic": "Geometriya",
+          "explanation": "$c = \\sqrt{3^2 + 4^2} = 5$ sm."
+        },
+        {
+          "n": "5",
+          "k": "mc",
+          "s": "$f(x) = 3x^{2} - 7$ funksiyaning $x_0 = 1$ nuqtadagi hosilasi $f'(1)$ ni toping.",
+          "o": [
+            "6",
+            "9",
+            "3",
+            "4"
+          ],
+          "c": 0,
+          "topic": "Hosila",
+          "explanation": "$f'(x) = 6x$, demak $f'(1) = 6$."
+        },
+        {
+          "n": "6",
+          "k": "mc",
+          "s": "$\\sqrt{18} + \\sqrt{18}$ ifodani soddalashtiring.",
+          "o": [
+            "$3\\sqrt{2}$",
+            "$6\\sqrt{2}$",
+            "$8\\sqrt{2}$",
+            "$6$"
+          ],
+          "c": 1,
+          "topic": "Ildizlar",
+          "explanation": "$3\\sqrt{2} + 3\\sqrt{2} = 6\\sqrt{2}$."
+        },
+        {
+          "n": "7",
+          "k": "mc",
+          "s": "$x^{2} - 16x + 60 = 0$ kvadrat tenglamaning ildizlari yig‘indisini toping.",
+          "o": [
+            "18",
+            "14",
+            "16",
+            "60"
+          ],
+          "c": 2,
+          "topic": "Kvadrat tenglama",
+          "explanation": "Viyet teoremasiga ko‘ra $x_1 + x_2 = 16$."
+        },
+        {
+          "n": "8",
+          "k": "mc",
+          "s": "$\\log_{4}{(1024 \\cdot 4)}$ ifodaning qiymatini hisoblang.",
+          "o": [
+            "5",
+            "7",
+            "10",
+            "6"
+          ],
+          "c": 3,
+          "topic": "Logarifm",
+          "explanation": "$1024 \\cdot 4 = 4^{6}$, demak qiymati $6$."
+        },
+        {
+          "n": "9",
+          "k": "mc",
+          "s": "Arifmetik progressiyada $a_1 = 9$ va $d = 10$ bo‘lsa, $a_{9}$ hadini toping.",
+          "o": [
+            "89",
+            "99",
+            "79",
+            "89 + 1"
+          ],
+          "c": 0,
+          "topic": "Progressiya",
+          "explanation": "$a_{9} = 9 + (9-1)\\cdot10 = 89$."
+        },
+        {
+          "n": "10",
+          "k": "mc",
+          "s": "To‘g‘ri burchakli uchburchakning katetlari $3$ sm va $4$ sm bo‘lsa, gipotenuzasini (sm) toping.",
+          "o": [
+            "7",
+            "5",
+            "4",
+            "5 + 1"
+          ],
+          "c": 1,
+          "topic": "Geometriya",
+          "explanation": "$c = \\sqrt{3^2 + 4^2} = 5$ sm."
+        },
+        {
+          "n": "11",
+          "k": "mc",
+          "s": "$f(x) = 12x^{2} - 7$ funksiyaning $x_0 = 3$ nuqtadagi hosilasi $f'(3)$ ni toping.",
+          "o": [
+            "84",
+            "36",
+            "72",
+            "70"
+          ],
+          "c": 2,
+          "topic": "Hosila",
+          "explanation": "$f'(x) = 24x$, demak $f'(3) = 72$."
+        },
+        {
+          "n": "12",
+          "k": "mc",
+          "s": "$\\sqrt{50} + \\sqrt{50}$ ifodani soddalashtiring.",
+          "o": [
+            "$5\\sqrt{2}$",
+            "$12\\sqrt{2}$",
+            "$10$",
+            "$10\\sqrt{2}$"
+          ],
+          "c": 3,
+          "topic": "Ildizlar",
+          "explanation": "$5\\sqrt{2} + 5\\sqrt{2} = 10\\sqrt{2}$."
+        },
+        {
+          "n": "13",
+          "k": "mc",
+          "s": "$x^{2} - 12x + 32 = 0$ kvadrat tenglamaning ildizlari yig‘indisini toping.",
+          "o": [
+            "12",
+            "14",
+            "10",
+            "32"
+          ],
+          "c": 0,
+          "topic": "Kvadrat tenglama",
+          "explanation": "Viyet teoremasiga ko‘ra $x_1 + x_2 = 12$."
+        },
+        {
+          "n": "14",
+          "k": "mc",
+          "s": "$\\log_{5}{(125 \\cdot 5)}$ ifodaning qiymatini hisoblang.",
+          "o": [
+            "3",
+            "4",
+            "5",
+            "6"
+          ],
+          "c": 1,
+          "topic": "Logarifm",
+          "explanation": "$125 \\cdot 5 = 5^{4}$, demak qiymati $4$."
+        },
+        {
+          "n": "15",
+          "k": "mc",
+          "s": "Arifmetik progressiyada $a_1 = 7$ va $d = 10$ bo‘lsa, $a_{10}$ hadini toping.",
+          "o": [
+            "107",
+            "87",
+            "97",
+            "97 + 1"
+          ],
+          "c": 2,
+          "topic": "Progressiya",
+          "explanation": "$a_{10} = 7 + (10-1)\\cdot10 = 97$."
+        },
+        {
+          "n": "16",
+          "k": "mc",
+          "s": "To‘g‘ri burchakli uchburchakning katetlari $3$ sm va $4$ sm bo‘lsa, gipotenuzasini (sm) toping.",
+          "o": [
+            "7",
+            "4",
+            "5 + 1",
+            "5"
+          ],
+          "c": 3,
+          "topic": "Geometriya",
+          "explanation": "$c = \\sqrt{3^2 + 4^2} = 5$ sm."
+        },
+        {
+          "n": "17",
+          "k": "mc",
+          "s": "$f(x) = 10x^{2} - 7$ funksiyaning $x_0 = 1$ nuqtadagi hosilasi $f'(1)$ ni toping.",
+          "o": [
+            "20",
+            "30",
+            "10",
+            "18"
+          ],
+          "c": 0,
+          "topic": "Hosila",
+          "explanation": "$f'(x) = 20x$, demak $f'(1) = 20$."
+        },
+        {
+          "n": "18",
+          "k": "mc",
+          "s": "$\\sqrt{18} + \\sqrt{18}$ ifodani soddalashtiring.",
+          "o": [
+            "$3\\sqrt{2}$",
+            "$6\\sqrt{2}$",
+            "$8\\sqrt{2}$",
+            "$6$"
+          ],
+          "c": 1,
+          "topic": "Ildizlar",
+          "explanation": "$3\\sqrt{2} + 3\\sqrt{2} = 6\\sqrt{2}$."
+        },
+        {
+          "n": "19",
+          "k": "mc",
+          "s": "$x^{2} - 8x + 12 = 0$ kvadrat tenglamaning ildizlari yig‘indisini toping.",
+          "o": [
+            "10",
+            "6",
+            "8",
+            "12"
+          ],
+          "c": 2,
+          "topic": "Kvadrat tenglama",
+          "explanation": "Viyet teoremasiga ko‘ra $x_1 + x_2 = 8$."
+        },
+        {
+          "n": "20",
+          "k": "mc",
+          "s": "$\\log_{3}{(243 \\cdot 3)}$ ifodaning qiymatini hisoblang.",
+          "o": [
+            "5",
+            "7",
+            "10",
+            "6"
+          ],
+          "c": 3,
+          "topic": "Logarifm",
+          "explanation": "$243 \\cdot 3 = 3^{6}$, demak qiymati $6$."
+        },
+        {
+          "n": "21",
+          "k": "mc",
+          "s": "Arifmetik progressiyada $a_1 = 5$ va $d = 10$ bo‘lsa, $a_{6}$ hadini toping.",
+          "o": [
+            "55",
+            "65",
+            "45",
+            "55 + 1"
+          ],
+          "c": 0,
+          "topic": "Progressiya",
+          "explanation": "$a_{6} = 5 + (6-1)\\cdot10 = 55$."
+        },
+        {
+          "n": "22",
+          "k": "mc",
+          "s": "To‘g‘ri burchakli uchburchakning katetlari $3$ sm va $4$ sm bo‘lsa, gipotenuzasini (sm) toping.",
+          "o": [
+            "7",
+            "5",
+            "4",
+            "5 + 1"
+          ],
+          "c": 1,
+          "topic": "Geometriya",
+          "explanation": "$c = \\sqrt{3^2 + 4^2} = 5$ sm."
+        },
+        {
+          "n": "23",
+          "k": "mc",
+          "s": "$f(x) = 8x^{2} - 7$ funksiyaning $x_0 = 3$ nuqtadagi hosilasi $f'(3)$ ni toping.",
+          "o": [
+            "56",
+            "24",
+            "48",
+            "46"
+          ],
+          "c": 2,
+          "topic": "Hosila",
+          "explanation": "$f'(x) = 16x$, demak $f'(3) = 48$."
+        },
+        {
+          "n": "24",
+          "k": "mc",
+          "s": "$\\sqrt{50} + \\sqrt{50}$ ifodani soddalashtiring.",
+          "o": [
+            "$5\\sqrt{2}$",
+            "$12\\sqrt{2}$",
+            "$10$",
+            "$10\\sqrt{2}$"
+          ],
+          "c": 3,
+          "topic": "Ildizlar",
+          "explanation": "$5\\sqrt{2} + 5\\sqrt{2} = 10\\sqrt{2}$."
+        },
+        {
+          "n": "25",
+          "k": "mc",
+          "s": "$x^{2} - 26x + 165 = 0$ kvadrat tenglamaning ildizlari yig‘indisini toping.",
+          "o": [
+            "26",
+            "28",
+            "24",
+            "165"
+          ],
+          "c": 0,
+          "topic": "Kvadrat tenglama",
+          "explanation": "Viyet teoremasiga ko‘ra $x_1 + x_2 = 26$."
+        },
+        {
+          "n": "26",
+          "k": "mc",
+          "s": "$\\log_{5}{(125 \\cdot 5)}$ ifodaning qiymatini hisoblang.",
+          "o": [
+            "3",
+            "4",
+            "5",
+            "6"
+          ],
+          "c": 1,
+          "topic": "Logarifm",
+          "explanation": "$125 \\cdot 5 = 5^{4}$, demak qiymati $4$."
+        },
+        {
+          "n": "27",
+          "k": "mc",
+          "s": "Arifmetik progressiyada $a_1 = 3$ va $d = 10$ bo‘lsa, $a_{7}$ hadini toping.",
+          "o": [
+            "73",
+            "53",
+            "63",
+            "63 + 1"
+          ],
+          "c": 2,
+          "topic": "Progressiya",
+          "explanation": "$a_{7} = 3 + (7-1)\\cdot10 = 63$."
+        },
+        {
+          "n": "28",
+          "k": "mc",
+          "s": "To‘g‘ri burchakli uchburchakning katetlari $3$ sm va $4$ sm bo‘lsa, gipotenuzasini (sm) toping.",
+          "o": [
+            "7",
+            "4",
+            "5 + 1",
+            "5"
+          ],
+          "c": 3,
+          "topic": "Geometriya",
+          "explanation": "$c = \\sqrt{3^2 + 4^2} = 5$ sm."
+        },
+        {
+          "n": "29",
+          "k": "mc",
+          "s": "$f(x) = 6x^{2} - 7$ funksiyaning $x_0 = 1$ nuqtadagi hosilasi $f'(1)$ ni toping.",
+          "o": [
+            "12",
+            "18",
+            "6",
+            "10"
+          ],
+          "c": 0,
+          "topic": "Hosila",
+          "explanation": "$f'(x) = 12x$, demak $f'(1) = 12$."
+        },
+        {
+          "n": "30",
+          "k": "mc",
+          "s": "$\\sqrt{18} + \\sqrt{18}$ ifodani soddalashtiring.",
+          "o": [
+            "$3\\sqrt{2}$",
+            "$6\\sqrt{2}$",
+            "$8\\sqrt{2}$",
+            "$6$"
+          ],
+          "c": 1,
+          "topic": "Ildizlar",
+          "explanation": "$3\\sqrt{2} + 3\\sqrt{2} = 6\\sqrt{2}$."
+        },
+        {
+          "n": "31",
+          "k": "mc",
+          "s": "$x^{2} - 22x + 117 = 0$ kvadrat tenglamaning ildizlari yig‘indisini toping.",
+          "o": [
+            "24",
+            "20",
+            "22",
+            "117"
+          ],
+          "c": 2,
+          "topic": "Kvadrat tenglama",
+          "explanation": "Viyet teoremasiga ko‘ra $x_1 + x_2 = 22$."
+        },
+        {
+          "n": "32",
+          "k": "mc",
+          "s": "$\\log_{3}{(243 \\cdot 3)}$ ifodaning qiymatini hisoblang.",
+          "o": [
+            "5",
+            "7",
+            "10",
+            "6"
+          ],
+          "c": 3,
+          "topic": "Logarifm",
+          "explanation": "$243 \\cdot 3 = 3^{6}$, demak qiymati $6$."
+        },
+        {
+          "n": "33",
+          "k": "mc",
+          "s": "Arifmetik progressiyada $a_1 = 12$ va $d = 10$ bo‘lsa, $a_{8}$ hadini toping.",
+          "o": [
+            "82",
+            "92",
+            "72",
+            "82 + 1"
+          ],
+          "c": 0,
+          "topic": "Progressiya",
+          "explanation": "$a_{8} = 12 + (8-1)\\cdot10 = 82$."
+        },
+        {
+          "n": "34",
+          "k": "mc",
+          "s": "To‘g‘ri burchakli uchburchakning katetlari $3$ sm va $4$ sm bo‘lsa, gipotenuzasini (sm) toping.",
+          "o": [
+            "7",
+            "5",
+            "4",
+            "5 + 1"
+          ],
+          "c": 1,
+          "topic": "Geometriya",
+          "explanation": "$c = \\sqrt{3^2 + 4^2} = 5$ sm."
+        },
+        {
+          "n": "35",
+          "k": "mc",
+          "s": "$f(x) = 4x^{2} - 7$ funksiyaning $x_0 = 3$ nuqtadagi hosilasi $f'(3)$ ni toping.",
+          "o": [
+            "28",
+            "12",
+            "24",
+            "22"
+          ],
+          "c": 2,
+          "topic": "Hosila",
+          "explanation": "$f'(x) = 8x$, demak $f'(3) = 24$."
+        },
+        {
+          "n": "36a",
+          "k": "w",
+          "s": "$\\sqrt{x} = 6$ tenglamaning ildizi $x$ ni toping.",
+          "o": [],
+          "a": "36",
+          "topic": "Matematika (yozma)",
+          "explanation": "Javob: 36."
+        },
+        {
+          "n": "36b",
+          "k": "w",
+          "s": "$\\sqrt{x} = 3$ tenglamaning ildizi $x$ ni toping.",
+          "o": [],
+          "a": "9",
+          "topic": "Matematika (yozma)",
+          "explanation": "Javob: 9."
+        },
+        {
+          "n": "37a",
+          "k": "w",
+          "s": "$\\sqrt{x} = 8$ tenglamaning ildizi $x$ ni toping.",
+          "o": [],
+          "a": "64",
+          "topic": "Matematika (yozma)",
+          "explanation": "Javob: 64."
+        },
+        {
+          "n": "37b",
+          "k": "w",
+          "s": "$\\sqrt{x} = 5$ tenglamaning ildizi $x$ ni toping.",
+          "o": [],
+          "a": "25",
+          "topic": "Matematika (yozma)",
+          "explanation": "Javob: 25."
+        },
+        {
+          "n": "38a",
+          "k": "w",
+          "s": "$\\sqrt{x} = 2$ tenglamaning ildizi $x$ ni toping.",
+          "o": [],
+          "a": "4",
+          "topic": "Matematika (yozma)",
+          "explanation": "Javob: 4."
+        },
+        {
+          "n": "38b",
+          "k": "w",
+          "s": "$\\sqrt{x} = 7$ tenglamaning ildizi $x$ ni toping.",
+          "o": [],
+          "a": "49",
+          "topic": "Matematika (yozma)",
+          "explanation": "Javob: 49."
+        },
+        {
+          "n": "39a",
+          "k": "w",
+          "s": "$\\sqrt{x} = 4$ tenglamaning ildizi $x$ ni toping.",
+          "o": [],
+          "a": "16",
+          "topic": "Matematika (yozma)",
+          "explanation": "Javob: 16."
+        },
+        {
+          "n": "39b",
+          "k": "w",
+          "s": "$\\sqrt{x} = 9$ tenglamaning ildizi $x$ ni toping.",
+          "o": [],
+          "a": "81",
+          "topic": "Matematika (yozma)",
+          "explanation": "Javob: 81."
+        },
+        {
+          "n": "40a",
+          "k": "w",
+          "s": "$\\sqrt{x} = 6$ tenglamaning ildizi $x$ ni toping.",
+          "o": [],
+          "a": "36",
+          "topic": "Matematika (yozma)",
+          "explanation": "Javob: 36."
+        },
+        {
+          "n": "40b",
+          "k": "w",
+          "s": "$\\sqrt{x} = 3$ tenglamaning ildizi $x$ ni toping.",
+          "o": [],
+          "a": "9",
+          "topic": "Matematika (yozma)",
+          "explanation": "Javob: 9."
+        }
+      ],
+      "by": "u_owner"
+    }
+  ],
+  "attempts": [],
+  "starts": [
+    {
+      "uid": "u_owner",
+      "tid": "t_3cb8c0b750",
+      "at": 1794853042978
+    }
+  ],
+  "payConfig": {
+    "price": 25000,
+    "card": "8600 1204 5590 3318",
+    "holder": "SHERBEK M.",
+    "note": "To‘lov chekini yuklang. Owner tekshirgach avtomatik ochiladi."
+  },
+  "payRequests": [],
+  "images": {},
+  "sessions": {
+    "2d3573b0e8c92d07c3147510161dc4707933b5dd88972860": "u_859883965193",
+    "b0064cc995f6b6e2148cfcd8649a595cd15fd01baf20218b": "u_owner",
+    "d43edaa5d5814486f96e0b14d908b4f452703f823e8b020f": "u_e295cc54a667"
+  },
+  "siteConfig": {
+    "authorLabel": "Milliy Sertifikat",
+    "telegramHandle": "",
+    "contactText": "Onlayn test va attestatsiya platformasi"
+  }
+}
