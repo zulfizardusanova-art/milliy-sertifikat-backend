@@ -51,16 +51,12 @@ import type { PaymentRequest, Question, Role, SiteConfig } from './src/types';
 if (!getApps().length) {
   try {
     let serviceAccount;
-
     if (fs.existsSync('/etc/secrets/serviceAccount.json')) {
       serviceAccount = JSON.parse(fs.readFileSync('/etc/secrets/serviceAccount.json', 'utf8'));
     } else {
       serviceAccount = JSON.parse(fs.readFileSync('./serviceAccount.json', 'utf8'));
     }
-
-    initializeApp({
-      credential: cert(serviceAccount),
-    });
+    initializeApp({ credential: cert(serviceAccount) });
     console.log("✅ Firebase muvaffaqiyatli ishga tushdi.");
   } catch (error) {
     console.error("❌ Firebase'ni ishga tushirishda xatolik:", error);
@@ -83,10 +79,7 @@ app.use(express.json({ limit: '10mb' }));
 function getGeminiClient(): GoogleGenAI | null {
   const apiKey = process.env.GEMINI_API_KEY;
   if (!apiKey || apiKey === 'MY_GEMINI_API_KEY') return null;
-  return new GoogleGenAI({
-    apiKey,
-    httpOptions: { headers: { 'User-Agent': 'aistudio-build' } },
-  });
+  return new GoogleGenAI({ apiKey, httpOptions: { headers: { 'User-Agent': 'aistudio-build' } } });
 }
 
 function getSessionUser(req: express.Request): StoredUser | null {
@@ -117,29 +110,15 @@ app.post('/api/auth/login', async (req, res) => {
       const profile = await fetchLegacyUserProfile(fbAuth.localId, fbAuth.idToken);
       const safeRole: Role = profile?.role === 'admin' || profile?.role === 'owner' ? profile.role : 'user';
       user = {
-        id: 'fb_' + fbAuth.localId,
-        nm: (profile?.nm || lg).slice(0, 60),
-        lg,
-        role: safeRole,
-        prem: Number(profile?.prem) || 0,
-        school: '',
-        subject: '',
-        unlockedTests: [],
-        passwordHash: hashPassword(pw),
+        id: 'fb_' + fbAuth.localId, nm: (profile?.nm || lg).slice(0, 60), lg, role: safeRole,
+        prem: Number(profile?.prem) || 0, school: '', subject: '', unlockedTests: [], passwordHash: hashPassword(pw),
       };
       dbData.users.push(user);
     }
   }
 
-  if (!user) {
-    res.status(401).json({ error: 'Login yoki parol noto‘g‘ri.' });
-    return;
-  }
-
-  if (!verifyPassword(pw, user.passwordHash)) {
-    res.status(401).json({ error: 'Login yoki parol noto‘g‘ri.' });
-    return;
-  }
+  if (!user) { res.status(401).json({ error: 'Login yoki parol noto‘g‘ri.' }); return; }
+  if (!verifyPassword(pw, user.passwordHash)) { res.status(401).json({ error: 'Login yoki parol noto‘g‘ri.' }); return; }
 
   const token = makeToken();
   dbData.sessions[token] = user.id;
@@ -152,35 +131,18 @@ app.post('/api/auth/register', (req, res) => {
   const lg = String(req.body?.lg || '').trim().toLowerCase().replace(/^@/, '');
   const pw = String(req.body?.pw || '');
 
-  if (!nm || nm.length < 2) {
-    res.status(400).json({ error: 'Ismingizni kamida 2 ta harf bilan yozing.' });
-    return;
-  }
-  if (!/^[a-z0-9_.]{3,30}$/.test(lg)) {
-    res.status(400).json({ error: 'Login 3–30 belgi: lotin harflari, raqam, _ yoki nuqta bo‘lishi kerak.' });
-    return;
-  }
-  if (pw.length < 8 || !/[a-zA-Z]/.test(pw) || !/\d/.test(pw)) {
-    res.status(400).json({ error: 'Parol kamida 8 belgi bo‘lib, harf va raqamni o‘z ichiga olsin.' });
-    return;
-  }
+  if (!nm || nm.length < 2) { res.status(400).json({ error: 'Ismingizni kamida 2 ta harf bilan yozing.' }); return; }
+  if (!/^[a-z0-9_.]{3,30}$/.test(lg)) { res.status(400).json({ error: 'Login 3–30 belgi: lotin harflari, raqam, _ yoki nuqta bo‘lishi kerak.' }); return; }
+  if (pw.length < 8 || !/[a-zA-Z]/.test(pw) || !/\d/.test(pw)) { res.status(400).json({ error: 'Parol kamida 8 belgi bo‘lib, harf va raqamni o‘z ichiga olsin.' }); return; }
 
   const dbData = loadDb();
+  if (dbData.users.some((u) => u.lg === lg)) { res.status(409).json({ error: 'Bu login band.' }); return; }
 
-  if (dbData.users.some((u) => u.lg === lg)) {
-    res.status(409).json({ error: 'Bu login band.' });
-    return;
-  }
-
-  // AGAR BAZA BO'SH BO'LSA -> OWNER, AKS HOLDA -> USER
   const newUser: StoredUser = {
     id: 'u_' + crypto.randomBytes(6).toString('hex'),
-    nm,
-    lg,
+    nm, lg,
     role: dbData.users.length === 0 ? 'owner' : 'user',
-    prem: 0,
-    passwordHash: hashPassword(pw),
-    unlockedTests: [],
+    prem: 0, passwordHash: hashPassword(pw), unlockedTests: [],
   };
   dbData.users.push(newUser);
   const token = makeToken();
@@ -204,60 +166,36 @@ app.post('/api/auth/logout', (req, res) => {
 // ==========================================
 app.patch('/api/profile', (req, res) => {
   const user = getSessionUser(req);
-  if (!user) {
-    res.status(401).json({ error: 'Avval tizimga kiring.' });
-    return;
-  }
+  if (!user) { res.status(401).json({ error: 'Avval tizimga kiring.' }); return; }
   const dbData = loadDb();
   const target = dbData.users.find((u) => u.id === user.id)!;
 
   if (typeof req.body?.nm === 'string') {
     const nm = req.body.nm.trim();
-    if (nm.length < 2) {
-      res.status(400).json({ error: 'Ism kamida 2 ta belgi bo‘lishi kerak.' });
-      return;
-    }
+    if (nm.length < 2) { res.status(400).json({ error: 'Ism kamida 2 ta belgi bo‘lishi kerak.' }); return; }
     target.nm = nm.slice(0, 60);
   }
-
   if (typeof req.body?.lg === 'string') {
     const nextLg = req.body.lg.trim().toLowerCase().replace(/^@/, '');
     if (nextLg !== target.lg) {
-      if (!/^[a-z0-9_.]{3,30}$/.test(nextLg)) {
-        res.status(400).json({ error: 'Login 3–30 belgi: lotin harflari, raqam, _ yoki nuqta bo‘lishi kerak.' });
-        return;
-      }
-      if (dbData.users.some((u) => u.id !== target.id && u.lg === nextLg)) {
-        res.status(409).json({ error: 'Bu login band.' });
-        return;
-      }
+      if (!/^[a-z0-9_.]{3,30}$/.test(nextLg)) { res.status(400).json({ error: 'Login 3–30 belgi.' }); return; }
+      if (dbData.users.some((u) => u.id !== target.id && u.lg === nextLg)) { res.status(409).json({ error: 'Bu login band.' }); return; }
       target.lg = nextLg;
     }
   }
-
   if (typeof req.body?.school === 'string') target.school = req.body.school.trim().slice(0, 120);
   if (typeof req.body?.subject === 'string') target.subject = req.body.subject.trim().slice(0, 80);
   if (typeof req.body?.avatar === 'string') {
     const av = req.body.avatar;
-    if (av === '' || /^data:image\/(jpeg|png|webp);base64,[A-Za-z0-9+/=]+$/.test(av)) {
-      target.avatar = av;
-    }
+    if (av === '' || /^data:image\/(jpeg|png|webp);base64,[A-Za-z0-9+/=]+$/.test(av)) { target.avatar = av; }
   }
-
   if (req.body?.newPassword) {
     const currentPw = String(req.body.currentPassword || '');
     const newPw = String(req.body.newPassword || '');
-    if (!verifyPassword(currentPw, target.passwordHash)) {
-      res.status(400).json({ error: 'Joriy parol noto‘g‘ri.' });
-      return;
-    }
-    if (newPw.length < 8 || !/[a-zA-Z]/.test(newPw) || !/\d/.test(newPw)) {
-      res.status(400).json({ error: 'Yangi parol kamida 8 belgi, harf va raqamdan iborat bo‘lishi kerak.' });
-      return;
-    }
+    if (!verifyPassword(currentPw, target.passwordHash)) { res.status(400).json({ error: 'Joriy parol noto‘g‘ri.' }); return; }
+    if (newPw.length < 8 || !/[a-zA-Z]/.test(newPw) || !/\d/.test(newPw)) { res.status(400).json({ error: 'Yangi parol kamida 8 belgi.' }); return; }
     target.passwordHash = hashPassword(newPw);
   }
-
   saveDb(dbData);
   res.json({ user: sanitizeUser(target) });
 });
@@ -272,10 +210,7 @@ app.get('/api/public/config', (_req, res) => {
 
 app.put('/api/site/config', (req, res) => {
   const owner = getSessionUser(req);
-  if (!owner || owner.role !== 'owner') {
-    res.status(403).json({ error: 'Faqat Owner sayt aloqasini o‘zgartira oladi.' });
-    return;
-  }
+  if (!owner || owner.role !== 'owner') { res.status(403).json({ error: 'Faqat Owner.' }); return; }
   const dbData = loadDb();
   const rawTg = String(req.body?.telegramHandle || '').trim().replace(/^https?:\/\/t\.me\//i, '').replace(/^@/, '').slice(0, 50);
   const nextCfg: SiteConfig = {
@@ -289,15 +224,21 @@ app.put('/api/site/config', (req, res) => {
 });
 
 // ==========================================
-// 7. STATE HYDRATION
+// 7. STATE HYDRATION (BU YERDA MAJBURIY OWNER MANTIG'I BOR)
 // ==========================================
 app.get('/api/state', (req, res) => {
   const user = getSessionUser(req);
-  if (!user) {
-    res.status(401).json({ error: 'Avval tizimga kiring.' });
-    return;
-  }
+  if (!user) { res.status(401).json({ error: 'Avval tizimga kiring.' }); return; }
   const dbData = loadDb();
+
+  // --- MAJBURIY OWNER QILISH ---
+  // Agar bu odam bazadagi birinchi foydalanuvchi bo'lsa, uni doim owner qilamiz
+  if (dbData.users.length > 0 && dbData.users[0].id === user.id) {
+    user.role = 'owner';
+    saveDb(dbData);
+  }
+  // ------------------------------
+
   const isStaff = user.role !== 'user';
   const isOwner = user.role === 'owner';
 
@@ -335,7 +276,7 @@ app.post('/api/tests/:id/start', (req, res) => {
   const now = Date.now();
   if (test.at > now) { res.status(403).json({ error: 'Test hali boshlanmagan.' }); return; }
   if (!test.isLifetime && test.end > 0 && now > test.end) { res.status(403).json({ error: 'Test muddati tugagan.' }); return; }
-  if (!hasTestAccess(user, test, dbData.attempts)) { res.status(402).json({ error: `Bu test pullik (${test.price.toLocaleString('ru-RU')} so‘m). Avval to‘lov qilib tasdiqlating.` }); return; }
+  if (!hasTestAccess(user, test, dbData.attempts)) { res.status(402).json({ error: `Bu test pullik.` }); return; }
 
   let start = dbData.starts.find((s) => s.uid === user.id && s.tid === test.id);
   if (!start) {
@@ -376,7 +317,7 @@ app.post('/api/tests', (req, res) => {
   const user = getSessionUser(req);
   if (!user || user.role === 'user') { res.status(403).json({ error: 'Ruxsat yo‘q.' }); return; }
   const body = req.body;
-  if (!Array.isArray(body?.q) || body.q.length === 0) { res.status(400).json({ error: 'Kamida 1 ta savol bo‘lishi shart (0 ta savolli test saqlanmaydi).' }); return; }
+  if (!Array.isArray(body?.q) || body.q.length === 0) { res.status(400).json({ error: 'Kamida 1 ta savol bo‘lishi shart.' }); return; }
   
   const dbData = loadDb();
   const id = 't_' + crypto.randomBytes(5).toString('hex');
@@ -471,7 +412,7 @@ app.post('/api/payments/request', (req, res) => {
 
 app.post('/api/payments/:id/verify', (req, res) => {
   const owner = getSessionUser(req);
-  if (!owner || owner.role !== 'owner') { res.status(403).json({ error: 'Faqat Owner tasdiqlashi mumkin.' }); return; }
+  if (!owner || owner.role !== 'owner') { res.status(403).json({ error: 'Faqat Owner.' }); return; }
   const decision = req.body?.status === 'ok' ? 'ok' : 'no';
   const dbData = loadDb();
   const pr = dbData.payRequests.find((r) => r.id === req.params.id);
@@ -495,7 +436,7 @@ app.post('/api/payments/:id/verify', (req, res) => {
 
 app.put('/api/payments/config', (req, res) => {
   const owner = getSessionUser(req);
-  if (!owner || owner.role !== 'owner') { res.status(403).json({ error: 'Faqat Owner o‘zgartira oladi.' }); return; }
+  if (!owner || owner.role !== 'owner') { res.status(403).json({ error: 'Faqat Owner.' }); return; }
   const dbData = loadDb();
   dbData.payConfig = {
     price: Math.max(1000, Math.round(Number(req.body?.price) || 25000)),
@@ -512,22 +453,15 @@ app.put('/api/payments/config', (req, res) => {
 // ==========================================
 app.post('/api/users/:id/role', (req, res) => {
   const actor = getSessionUser(req);
-  if (!actor || actor.role !== 'owner') {
-    res.status(403).json({ error: 'Faqat Asosiy Owner boshqa foydalanuvchilar rolini o‘zgartira oladi.' });
-    return;
-  }
+  if (!actor || actor.role !== 'owner') { res.status(403).json({ error: 'Faqat Asosiy Owner.' }); return; }
   const role = req.body?.role as Role;
   if (!['user', 'admin', 'owner'].includes(role)) { res.status(400).json({ error: 'Noto‘g‘ri rol.' }); return; }
   
   const dbData = loadDb();
   const target = dbData.users.find((u) => u.id === req.params.id);
   if (!target) { res.status(404).json({ error: 'Foydalanuvchi topilmadi.' }); return; }
+  if (target.id === actor.id && role !== 'owner') { res.status(400).json({ error: 'O‘z rolingizni tushira olmaysiz.' }); return; }
   
-  // Agar o'zini o'zi ushlab qolmoqchi bo'lsa (o'z rolini tushirmaslik uchun)
-  if (target.id === actor.id && role !== 'owner') {
-    res.status(400).json({ error: 'Asosiy Owner o‘z rolini o‘zgartira olmaydi.' });
-    return;
-  }
   target.role = role;
   saveDb(dbData);
   res.json({ user: sanitizeUser(target) });
@@ -569,7 +503,7 @@ app.get('/api/admin/backup', (req, res) => {
 app.post('/api/admin/restore', (req, res) => {
   const actor = getSessionUser(req);
   if (!actor || actor.role !== 'owner') { res.status(403).json({ error: 'Ruxsat yo‘q.' }); return; }
-  if (!req.body || typeof req.body !== 'object') { res.status(400).json({ error: 'Noto‘g‘ri zaxira JSON formati.' }); return; }
+  if (!req.body || typeof req.body !== 'object') { res.status(400).json({ error: 'Noto‘g‘ri zaxira formati.' }); return; }
   const dbData = loadDb();
   const result = mergeDatabaseBackup(dbData, req.body);
   saveDb(dbData);
@@ -581,10 +515,10 @@ app.post('/api/admin/import-firebase', async (req, res) => {
   if (!actor || actor.role !== 'owner') { res.status(403).json({ error: 'Ruxsat yo‘q.' }); return; }
   const lg = String(req.body?.lg || '').trim().toLowerCase().replace(/^@/, '');
   const pw = String(req.body?.pw || '');
-  if (!lg || !pw) { res.status(400).json({ error: 'Eski Firebase hisobining login va parolini kiriting.' }); return; }
+  if (!lg || !pw) { res.status(400).json({ error: 'Login va parolni kiriting.' }); return; }
   
   const legacy = await fetchAllLegacyFirebaseData(lg, pw);
-  if (!legacy) { res.status(401).json({ error: 'Eski Firebase hisobiga kirib bo‘lmadi.' }); return; }
+  if (!legacy) { res.status(401).json({ error: 'Eski hisobga kirib bo‘lmadi.' }); return; }
   
   const dbData = loadDb();
   const result = mergeDatabaseBackup(dbData, legacy);
@@ -593,16 +527,16 @@ app.post('/api/admin/import-firebase', async (req, res) => {
 });
 
 // ==========================================
-// 13. GEMINI AI ENDPOINTS (Owner-Only)
+// 13. GEMINI AI ENDPOINTS
 // ==========================================
 function formatGeminiError(err: unknown): { status: number; message: string } {
   const raw = err instanceof Error ? err.message : String(err || '');
   const lower = raw.toLowerCase();
   if (lower.includes('api_key_invalid') || lower.includes('permission_denied') || lower.includes('403')) {
-    return { status: 400, message: 'GEMINI_API_KEY yaroqsiz yoki sozlanmagan.' };
+    return { status: 400, message: 'GEMINI_API_KEY yaroqsiz.' };
   }
   if (lower.includes('resource_exhausted') || lower.includes('429')) {
-    return { status: 429, message: 'AI so‘rovlar limiti vaqtincha tugadi.' };
+    return { status: 429, message: 'AI limiti tugadi.' };
   }
   return { status: 502, message: raw ? `AI xato: ${raw}` : 'AI bilan xato.' };
 }
@@ -639,7 +573,7 @@ app.post('/api/ai/mock', async (req, res) => {
         required: ['k', 's', 'o', 'topic', 'explanation'],
       },
     };
-    const systemInstruction = "Siz O'zbekiston Milliy sertifikat uchun professional testologsiz. JSON massivda qaytaring.";
+    const systemInstruction = "Siz testologsiz. JSON massiv qaytaring.";
     const rawItems: RawAiQuestionItem[] = [];
     let mcRem = mcCount; let wrRem = writtenCount;
 
@@ -661,7 +595,7 @@ app.post('/api/ai/mock', async (req, res) => {
     }
 
     const questions = normalizeAiMockQuestions(rawItems, mcCount, writtenCount);
-    if (questions.length === 0) { res.status(502).json({ error: 'AI savollarni shakllantira olmadi.' }); return; }
+    if (questions.length === 0) { res.status(502).json({ error: 'AI yarata olmadi.' }); return; }
     res.json({ questions, source: 'gemini' });
   } catch (err) {
     const mapped = formatGeminiError(err);
@@ -699,7 +633,7 @@ app.post('/api/ai/attestation', async (req, res) => {
         required: ['s', 'o', 'c', 'topic', 'explanation'],
       },
     };
-    const systemInstruction = "Siz ekspert testologisiz. KaTeX formulalar ishlating.";
+    const systemInstruction = "Siz ekspert testologisiz. KaTeX ishlating.";
     const rawItems: RawAiQuestionItem[] = [];
     let remaining = count;
 
@@ -743,7 +677,7 @@ app.post('/api/ai/clean-pdf', async (req, res) => {
   if (!ai) { res.status(400).json({ error: 'GEMINI_API_KEY sozlanmagan.' }); return; }
 
   try {
-    const prompt = `Quyidagi PDF dan o'qilgan savollarni tahrirlang, xatolarni to'g'rilang va KaTeX $...$ ga o'tkazing: ${JSON.stringify(items.slice(0, 25))}`;
+    const prompt = `Quyidagi savollarni tahrirlang va KaTeX $...$ ga o'tkazing: ${JSON.stringify(items.slice(0, 25))}`;
     const response = await ai.models.generateContent({
       model: 'gemini-1.5-flash', contents: prompt,
       config: {
