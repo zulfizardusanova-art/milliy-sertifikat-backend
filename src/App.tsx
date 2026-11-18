@@ -47,7 +47,7 @@ const DEFAULT_PUBLIC_SITE_CONFIG: SiteConfig = {
 const TOKEN_KEY = 'ms_session_token';
 const LANG_KEY = 'ms_lang';
 const THEME_KEY = 'ms_theme';
-
+const API_BASE_URL = 'https://milliy-sertifikat-backend.onrender.com';
 export default function App() {
   const [token, setToken] = useState<string>(() => localStorage.getItem(TOKEN_KEY) || '');
   const [lang, setLang] = useState<LanguageCode>(() => {
@@ -145,7 +145,7 @@ export default function App() {
 
   useEffect(() => {
     if (token) return;
-    fetch('/api/public/config')
+    fetch(`${API_BASE_URL}/api/public/config`)
       .then((r) => (r.ok ? r.json() : null))
       .then((j) => {
         if (j?.siteConfig) setSiteConfig(j.siteConfig as SiteConfig);
@@ -155,11 +155,11 @@ export default function App() {
 
   const handleLogin = async (lg: string, pw: string): Promise<string | null> => {
     try {
-      const res = await fetch('/api/auth/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ lg, pw }),
-      });
+      const res = await fetch(`${API_BASE_URL}/api/auth/login`, {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({ lg, pw }),
+});
       const json = await res.json();
       if (!res.ok) return json.error || 'Kirishda xato.';
       localStorage.setItem(TOKEN_KEY, json.token);

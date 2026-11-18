@@ -9,7 +9,7 @@ import { createServer as createViteServer } from 'vite';
 import { GoogleGenAI, ThinkingLevel, Type } from '@google/genai';
 import fs from 'node:fs';
 
-// BARCHA KERAKLI IMPORTLAR (O'CHIRILMAGAN)
+// BARCHA KERAKLI IMPORTLAR
 import {
   DEFAULT_SITE_CONFIG,
   ROOT_OWNER_ID,
@@ -72,7 +72,7 @@ if (!getApps().length) {
     process.exit(1);
   }
 }
-// FAQAT BITTA MARTA E'LON QILINADI
+
 export const db = getFirestore();
 
 // ==========================================
@@ -81,11 +81,6 @@ export const db = getFirestore();
 const app = express();
 app.use(cors());
 app.use(express.json({ limit: '10mb' }));
-
-// ==========================================
-// 3. YORDAMCHI FUNKSIYALAR
-// ==========================================
-// (Pastdagi qolgan barcha kodingiz o'zgarishsiz davom etadi...)
 
 // ==========================================
 // 3. YORDAMCHI FUNKSIYALAR
