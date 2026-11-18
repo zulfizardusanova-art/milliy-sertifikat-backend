@@ -1,13 +1,13 @@
 import cors from 'cors';
 import { initializeApp, getApps, cert } from 'firebase-admin/app';
 import { getFirestore } from 'firebase-admin/firestore';
-import serviceAccount from './serviceAccount.json';
 import 'dotenv/config';
 import express from 'express';
 import crypto from 'node:crypto';
 import path from 'node:path';
 import { createServer as createViteServer } from 'vite';
 import { GoogleGenAI, ThinkingLevel, Type } from '@google/genai';
+import fs from 'node:fs';
 
 // BARCHA KERAKLI IMPORTLAR (O'CHIRILMAGAN)
 import {
@@ -49,12 +49,22 @@ import {
 import type { PaymentRequest, Question, Role, SiteConfig } from './src/types';
 
 // ==========================================
-// 1. FIREBASE INITIALIZATION (YANGI USUL)
+// 1. FIREBASE INITIALIZATION
 // ==========================================
 if (!getApps().length) {
   try {
+    let serviceAccount;
+
+    // Render'dagi Environment Variable dan o'qish
+    if (process.env.FIREBASE_SERVICE_ACCOUNT) {
+      serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
+    } else {
+      // Lokal kompyuterda ishlayotganda fayldan o'qish
+      serviceAccount = JSON.parse(fs.readFileSync('./serviceAccount.json', 'utf8'));
+    }
+
     initializeApp({
-      credential: cert(serviceAccount as any),
+      credential: cert(serviceAccount),
     });
     console.log("✅ Firebase muvaffaqiyatli ishga tushdi.");
   } catch (error) {
@@ -72,6 +82,11 @@ export const db = getFirestore();
 const app = express();
 app.use(cors());
 app.use(express.json({ limit: '10mb' }));
+
+// ==========================================
+// 3. YORDAMCHI FUNKSIYALAR
+// ==========================================
+// (Pastdagi qolgan barcha kodingiz o'zgarishsiz davom etadi...)
 
 // ==========================================
 // 3. YORDAMCHI FUNKSIYALAR
