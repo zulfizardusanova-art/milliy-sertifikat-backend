@@ -19,7 +19,7 @@ import {
 } from './persist';
 
 export const ROOT_OWNER_ID = 'u_owner';
-export const ROOT_OWNER_LOGIN = 'sherbek_01';
+export const ROOT_OWNER_LOGIN = 'owner'; // Asosiy owner logini
 
 export interface StoredUser extends UserProfile {
   passwordHash: string;
@@ -85,30 +85,50 @@ function createInitialOwner(now = Date.now()): StoredUser {
 }
 
 /**
- * Ensures the Root Owner account uses the user's real login (`sherbek_01`)
- * and allows claiming their own chosen password once if still on the legacy
- * default `sherbek` placeholder, without touching any other users or tests.
+ * Asosiy Owner akkauntini loginga qarab topadi va unga to'liq huquqlarni beradi.
+ * Bu funksiya ID raqamlari to'qnashib ketmasligi uchun xavfsiz yozilgan.
  */
 export function ensureRootOwnerState(db: DatabaseState): boolean {
   let changed = false;
-  const owner = db.users.find((u) => u.id === ROOT_OWNER_ID);
+  
+  // 1. Avval loginga qarab, topilmasa ID ga qarab qidiramiz
+  let owner = db.users.find((u) => u.lg === ROOT_OWNER_LOGIN || u.id === ROOT_OWNER_ID);
+
+  // 2. Agar umuman topilmasa, yangi asosiy owner yaratamiz
   if (!owner) {
     db.users.unshift(createInitialOwner());
     return true;
   }
+
+  // 3. Agar topilgan owner ning ID si xato bo'lsa, to'g'rilaymiz
+  if (owner.id !== ROOT_OWNER_ID) {
+    // Agar eski `u_owner` ID li boshqa akkaunt bo'lsa, uning ID sini o'zgartiramiz (to'qnashuv bo'lmasligi uchun)
+    const conflictingIdUser = db.users.find(u => u.id === ROOT_OWNER_ID && u.lg !== ROOT_OWNER_LOGIN);
+    if (conflictingIdUser) {
+      conflictingIdUser.id = 'u_' + crypto.randomBytes(6).toString('hex');
+    }
+    owner.id = ROOT_OWNER_ID;
+    changed = true;
+  }
+
+  // 4. Rolini majburiy 'owner' qilamiz
   if (owner.role !== 'owner') {
     owner.role = 'owner';
     changed = true;
   }
-  if (owner.lg === 'sherbek') {
-    owner.lg = ROOT_OWNER_LOGIN;
-    owner.needsOwnerPasswordClaim = true;
+
+  // 5. Agar boshqa birov 'owner' logini bilan ro'yxatdan o'tgan bo'lsa, uning logini o'zgartiramiz
+  const conflictingLgUser = db.users.find(u => u.lg === ROOT_OWNER_LOGIN && u.id !== ROOT_OWNER_ID);
+  if (conflictingLgUser) {
+    conflictingLgUser.lg = conflictingLgUser.lg + '_old';
     changed = true;
   }
+
   if (!db.siteConfig) {
     db.siteConfig = { ...DEFAULT_SITE_CONFIG };
     changed = true;
   }
+
   return changed;
 }
 
@@ -177,8 +197,15 @@ export async function initDb(): Promise<void> {
     if (!db.images || typeof db.images !== 'object') db.images = {};
     if (!db.sessions || typeof db.sessions !== 'object') db.sessions = {};
     if (!db.payConfig) db.payConfig = base.payConfig;
-    ensureRootOwnerState(db);
+    
+    // Owner holatini tekshirish va saqlash
+    const stateChanged = ensureRootOwnerState(db);
     cachedDb = db;
+    
+    if (stateChanged) {
+       saveDb(db); // Agar o'zgargan bo'lsa, Firestore'ga qayta yozamiz
+    }
+    
     console.log(`Firestore'dan yuklandi: ${db.users.length} foydalanuvchi, ${db.tests.length} test.`);
   } else {
     cachedDb = null;

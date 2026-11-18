@@ -999,28 +999,6 @@ ${JSON.stringify(items.slice(0, 25))}`;
   }
 });
 
-// ==========================================
-// 14. VITE / STATIC SERVING
-// ==========================================
-async function startServer() {
-  const PORT = Number(process.env.PORT) || 3000;
-  await initDb();
-  
-  // --- VAQTINCHALIK: BARCHA USERLARNI OWNER QILISH ---
-  const localDb = loadDb();
-  localDb.users.forEach(u => {
-    u.role = 'owner';
-  });
-  saveDb(localDb);
-  // ---------------------------------------------------
-
-  const shutdown = async () => {
-    await flushDb();
-    process.exit(0);
-  };
-  // ... qolgan kod o'zgarishsiz qoladi
-  // ... qolgan kod o'zgarishsiz qoladi
-  // ... qolgan kod o'zgarishsiz qoladi
   process.on('SIGTERM', shutdown);
   process.on('SIGINT', shutdown);
   if (process.env.NODE_ENV !== 'production') {
