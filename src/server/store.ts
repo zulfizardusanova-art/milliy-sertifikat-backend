@@ -18,17 +18,14 @@ import {
   queueSave,
 } from './persist';
 
-export const ROOT_OWNER_ID = 'u_owner';
-export const ROOT_OWNER_LOGIN = 'owner'; // Asosiy owner logini
+export const ROOT_OWNER_LOGIN = 'owner'; // Faqat ma'lumot uchun qoldirildi
 
 export interface StoredUser extends UserProfile {
   passwordHash: string;
   needsOwnerPasswordClaim?: boolean;
 }
 
-export interface StoredTest extends TestItem {
-  // keys stored alongside questions on server, stripped before sending to active examinees
-}
+export interface StoredTest extends TestItem {}
 
 export interface StartRecord {
   uid: string;
@@ -45,7 +42,7 @@ export interface DatabaseState {
   siteConfig?: SiteConfig;
   payRequests: PaymentRequest[];
   images: Record<string, string>;
-  sessions: Record<string, string>; // token -> uid
+  sessions: Record<string, string>;
 }
 
 export const DEFAULT_SITE_CONFIG: SiteConfig = {
@@ -70,73 +67,10 @@ export function verifyPassword(password: string, stored: string): boolean {
   return crypto.timingSafeEqual(Buffer.from(derived), Buffer.from(orig));
 }
 
-function createInitialOwner(now = Date.now()): StoredUser {
-  return {
-    id: ROOT_OWNER_ID,
-    nm: 'Sherbek',
-    lg: ROOT_OWNER_LOGIN,
-    role: 'owner',
-    prem: now + 3650 * 864e5,
-    school: '',
-    subject: '',
-    passwordHash: hashPassword(crypto.randomBytes(16).toString('hex')),
-    needsOwnerPasswordClaim: true,
-  };
-}
-
-/**
- * Asosiy Owner akkauntini loginga qarab topadi va unga to'liq huquqlarni beradi.
- * Bu funksiya ID raqamlari to'qnashib ketmasligi uchun xavfsiz yozilgan.
- */
-export function ensureRootOwnerState(db: DatabaseState): boolean {
-  let changed = false;
-  
-  // 1. Avval loginga qarab, topilmasa ID ga qarab qidiramiz
-  let owner = db.users.find((u) => u.lg === ROOT_OWNER_LOGIN || u.id === ROOT_OWNER_ID);
-
-  // 2. Agar umuman topilmasa, yangi asosiy owner yaratamiz
-  if (!owner) {
-    db.users.unshift(createInitialOwner());
-    return true;
-  }
-
-  // 3. Agar topilgan owner ning ID si xato bo'lsa, to'g'rilaymiz
-  if (owner.id !== ROOT_OWNER_ID) {
-    // Agar eski `u_owner` ID li boshqa akkaunt bo'lsa, uning ID sini o'zgartiramiz (to'qnashuv bo'lmasligi uchun)
-    const conflictingIdUser = db.users.find(u => u.id === ROOT_OWNER_ID && u.lg !== ROOT_OWNER_LOGIN);
-    if (conflictingIdUser) {
-      conflictingIdUser.id = 'u_' + crypto.randomBytes(6).toString('hex');
-    }
-    owner.id = ROOT_OWNER_ID;
-    changed = true;
-  }
-
-  // 4. Rolini majburiy 'owner' qilamiz
-  if (owner.role !== 'owner') {
-    owner.role = 'owner';
-    changed = true;
-  }
-
-  // 5. Agar boshqa birov 'owner' logini bilan ro'yxatdan o'tgan bo'lsa, uning logini o'zgartiramiz
-  const conflictingLgUser = db.users.find(u => u.lg === ROOT_OWNER_LOGIN && u.id !== ROOT_OWNER_ID);
-  if (conflictingLgUser) {
-    conflictingLgUser.lg = conflictingLgUser.lg + '_old';
-    changed = true;
-  }
-
-  if (!db.siteConfig) {
-    db.siteConfig = { ...DEFAULT_SITE_CONFIG };
-    changed = true;
-  }
-
-  return changed;
-}
-
+// BAZA 100% BO'SH BOSHLANADI (Yashirin owner yo'q!)
 function createInitialDb(): DatabaseState {
-  const users: StoredUser[] = [createInitialOwner()];
-
   return {
-    users,
+    users: [], // Bo'm-bo'sh!
     tests: [],
     attempts: [],
     starts: [],
@@ -164,24 +98,14 @@ export function loadDb(): DatabaseState {
     try {
       const raw = fs.readFileSync(DB_FILE, 'utf-8');
       cachedDb = JSON.parse(raw) as DatabaseState;
-      if (ensureRootOwnerState(cachedDb)) {
-        saveDb(cachedDb);
-      }
       return cachedDb;
-    } catch {
-      // fall through and re-create
-    }
+    } catch {}
   }
   cachedDb = createInitialDb();
   saveDb(cachedDb);
   return cachedDb;
 }
 
-/**
- * Server ishga tushganda chaqiriladi. Firestore ulangan bo'lsa, bazani
- * o'sha yerdan yuklaydi; bo'sh bo'lsa, lokal data/db.json (yoki yangi baza)
- * dan boshlab Firestore'ga yozadi.
- */
 export async function initDb(): Promise<void> {
   if (!isPersistEnabled()) {
     console.log('Firestore ulanmagan: lokal data/db.json ishlatiladi.');
@@ -197,21 +121,13 @@ export async function initDb(): Promise<void> {
     if (!db.images || typeof db.images !== 'object') db.images = {};
     if (!db.sessions || typeof db.sessions !== 'object') db.sessions = {};
     if (!db.payConfig) db.payConfig = base.payConfig;
-    
-    // Owner holatini tekshirish va saqlash
-    const stateChanged = ensureRootOwnerState(db);
     cachedDb = db;
-    
-    if (stateChanged) {
-       saveDb(db); // Agar o'zgargan bo'lsa, Firestore'ga qayta yozamiz
-    }
-    
     console.log(`Firestore'dan yuklandi: ${db.users.length} foydalanuvchi, ${db.tests.length} test.`);
   } else {
     cachedDb = null;
-    const db = loadDb(); // lokal fayl yoki yangi baza
-    saveDb(db); // Firestore'ga birinchi marta yozish
-    console.log('Firestore bo\'sh edi: boshlang\'ich ma\'lumot yozildi.');
+    const db = loadDb();
+    saveDb(db);
+    console.log('Firestore bo\'sh edi: bazaga ilk ma\'lumot yozildi.');
   }
 }
 
@@ -288,10 +204,6 @@ export function hasTestAccess(
   return false;
 }
 
-/**
- * Safely merges imported users, tests, attempts, and payment config/requests
- * into the existing database without ever deleting existing records.
- */
 export function mergeDatabaseBackup(
   db: DatabaseState,
   incoming: Partial<DatabaseState>
