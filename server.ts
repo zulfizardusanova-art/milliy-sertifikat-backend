@@ -55,9 +55,9 @@ if (!getApps().length) {
   try {
     let serviceAccount;
 
-    // Render'dagi Environment Variable dan o'qish
-    if (process.env.FIREBASE_SERVICE_ACCOUNT) {
-      serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
+    // Render'dagi Secret File dan o'qish
+    if (fs.existsSync('/etc/secrets/serviceAccount.json')) {
+      serviceAccount = JSON.parse(fs.readFileSync('/etc/secrets/serviceAccount.json', 'utf8'));
     } else {
       // Lokal kompyuterda ishlayotganda fayldan o'qish
       serviceAccount = JSON.parse(fs.readFileSync('./serviceAccount.json', 'utf8'));
@@ -72,7 +72,6 @@ if (!getApps().length) {
     process.exit(1);
   }
 }
-
 // FAQAT BITTA MARTA E'LON QILINADI
 export const db = getFirestore();
 
