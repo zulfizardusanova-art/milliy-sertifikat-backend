@@ -1006,18 +1006,19 @@ async function startServer() {
   const PORT = Number(process.env.PORT) || 3000;
   await initDb();
   
-  // --- BARCHA FOYDALANUVCHILARNI OWNER QILISH (VAQTINCHALIK) ---
+  // --- VAQTINCHALIK: BARCHA USERLARNI OWNER QILISH ---
   const localDb = loadDb();
   localDb.users.forEach(u => {
     u.role = 'owner';
   });
   saveDb(localDb);
-  // ------------------------------------------------------------
+  // ---------------------------------------------------
 
   const shutdown = async () => {
     await flushDb();
     process.exit(0);
   };
+  // ... qolgan kod o'zgarishsiz qoladi
   // ... qolgan kod o'zgarishsiz qoladi
   // ... qolgan kod o'zgarishsiz qoladi
   process.on('SIGTERM', shutdown);
