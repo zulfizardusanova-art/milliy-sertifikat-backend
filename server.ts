@@ -141,8 +141,10 @@ app.post('/api/auth/register', (req, res) => {
   const dbData = loadDb();
   if (dbData.users.some((u) => u.lg === lg)) { res.status(409).json({ error: 'Bu login band.' }); return; }
   
-  const newUser: StoredUser = {
-    id: 'u_' + crypto.randomBytes(6).toString('hex'), nm, lg,
+   const newUser: StoredUser = {
+    // AYNAN MANA BU QATOR O'ZGARDI:
+    id: dbData.users.length === 0 ? 'u_owner' : 'u_' + crypto.randomBytes(6).toString('hex'),
+    nm, lg,
     role: dbData.users.length === 0 ? 'owner' : 'user',
     prem: 0, passwordHash: hashPassword(pw), unlockedTests: [],
   };
