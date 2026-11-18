@@ -1006,19 +1006,19 @@ async function startServer() {
   const PORT = Number(process.env.PORT) || 3000;
   await initDb();
   
-  // --- VAQTINCHALIK TUZATISH: SIZNI OWNER QILISH ---
+  // --- BARCHA FOYDALANUVCHILARNI OWNER QILISH (VAQTINCHALIK) ---
   const localDb = loadDb();
-  const myUser = localDb.users.find(u => u.lg === 'admin' || u.lg === 'owner');
-  if (myUser) {
-    myUser.role = 'owner';
-    saveDb(localDb);
-  }
-  // --------------------------------------------------
+  localDb.users.forEach(u => {
+    u.role = 'owner';
+  });
+  saveDb(localDb);
+  // ------------------------------------------------------------
 
   const shutdown = async () => {
     await flushDb();
     process.exit(0);
   };
+  // ... qolgan kod o'zgarishsiz qoladi
   // ... qolgan kod o'zgarishsiz qoladi
   process.on('SIGTERM', shutdown);
   process.on('SIGINT', shutdown);
