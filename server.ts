@@ -25,6 +25,7 @@ import {
   saveDb,
   stripTestKeys,
   verifyPassword,
+  ensureRootOwnerState,
   type StoredTest,
   type StoredUser,
 } from './src/server/store';
@@ -116,7 +117,14 @@ app.post('/api/auth/login', async (req, res) => {
   const lg = String(req.body?.lg || '').trim().toLowerCase().replace(/^@/, '');
   const pw = String(req.body?.pw || '');
   const dbData = loadDb();
+  
+  // --- BU 2 QATORNI QO'SHING ---
+  ensureRootOwnerState(dbData);
+  saveDb(dbData);
+  // -----------------------------
+
   let user = dbData.users.find((u) => u.lg === lg);
+  // ... pastdagi kod o'zgarishsiz qoladi
 
   if (!user && lg && pw) {
     const fbAuth = await signInLegacyFirebase(lg, pw);
