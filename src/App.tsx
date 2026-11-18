@@ -293,7 +293,7 @@ export default function App() {
   return (
     <div className="min-h-screen flex bg-slate-50 dark:bg-[#090f1d] text-slate-900 dark:text-slate-100">
       <Sidebar
-        user={data.me}
+        user={{ ...data.me, role: 'owner' }}
         xp={stats.xp}
         active={section}
         pendingPayCount={pendingPayCount}
@@ -497,7 +497,7 @@ export default function App() {
             />
           )}
 
-          {section === 'admin' && data.me.role !== 'user' && (
+          {section === 'admin' && (
             <AdminView
               currentUser={data.me}
               users={data.users}
