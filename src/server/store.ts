@@ -18,7 +18,7 @@ import {
   queueSave,
 } from './persist';
 
-export const ROOT_OWNER_LOGIN = 'owner'; // Faqat ma'lumot uchun qoldirildi
+export const ROOT_OWNER_LOGIN = 'owner'; // Majburiy asosiy owner logini
 
 export interface StoredUser extends UserProfile {
   passwordHash: string;
@@ -67,10 +67,47 @@ export function verifyPassword(password: string, stored: string): boolean {
   return crypto.timingSafeEqual(Buffer.from(derived), Buffer.from(orig));
 }
 
-// BAZA 100% BO'SH BOSHLANADI (Yashirin owner yo'q!)
+// ==========================================
+// ENG MUHIM QISM: @owner LOGININI MAJBURAN BOSS QILISH
+// ==========================================
+export function ensureRootOwnerState(db: DatabaseState): boolean {
+  let changed = false;
+  
+  // Tizimdan aynan '@owner' logini bilan odamni qidiramiz
+  let owner = db.users.find((u) => u.lg === ROOT_OWNER_LOGIN);
+
+  if (!owner) return false; // Agar hali ro'yxatdan o'tmagan bo'lsa, kutamiz
+
+  // Agar '@owner' ning ID raqami xato bo'lsa, uni 'u_owner' ga o'zgartiramiz
+  if (owner.id !== 'u_owner') {
+    const conflictingIdUser = db.users.find(u => u.id === 'u_owner' && u.lg !== ROOT_OWNER_LOGIN);
+    if (conflictingIdUser) {
+      conflictingIdUser.id = 'u_' + crypto.randomBytes(6).toString('hex');
+    }
+    owner.id = 'u_owner'; 
+    changed = true;
+  }
+
+  // Rolini majburiy 'owner' qilamiz
+  if (owner.role !== 'owner') {
+    owner.role = 'owner';
+    changed = true;
+  }
+
+  // Boshqa birovning logini 'owner' bo'lib qolgan bo'lsa, uni o'zgartiramiz
+  const conflictingLgUser = db.users.find(u => u.lg === ROOT_OWNER_LOGIN && u.id !== 'u_owner');
+  if (conflictingLgUser) {
+    conflictingLgUser.lg = conflictingLgUser.lg + '_old';
+    changed = true;
+  }
+
+  return changed;
+}
+
+// BAZA 100% BO'SH BOSHLANADI
 function createInitialDb(): DatabaseState {
   return {
-    users: [], // Bo'm-bo'sh!
+    users: [], 
     tests: [],
     attempts: [],
     starts: [],
@@ -98,6 +135,10 @@ export function loadDb(): DatabaseState {
     try {
       const raw = fs.readFileSync(DB_FILE, 'utf-8');
       cachedDb = JSON.parse(raw) as DatabaseState;
+      // Har safar yuklanganda owner holatini tekshiramiz
+      if (ensureRootOwnerState(cachedDb)) {
+        saveDb(cachedDb);
+      }
       return cachedDb;
     } catch {}
   }
@@ -121,8 +162,13 @@ export async function initDb(): Promise<void> {
     if (!db.images || typeof db.images !== 'object') db.images = {};
     if (!db.sessions || typeof db.sessions !== 'object') db.sessions = {};
     if (!db.payConfig) db.payConfig = base.payConfig;
+    
+    // Firestore'dan yuklanganda ham tekshiramiz
+    if (ensureRootOwnerState(db)) {
+      saveDb(db);
+    }
     cachedDb = db;
-    console.log(`Firestore'dan yuklandi: ${db.users.length} foydalanuvchi, ${db.tests.length} test.`);
+    console.log(`Firestore'dan yuklandi: ${db.users.length} foydalanuvchi.`);
   } else {
     cachedDb = null;
     const db = loadDb();
