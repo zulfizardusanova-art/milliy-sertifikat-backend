@@ -47,7 +47,9 @@ const DEFAULT_PUBLIC_SITE_CONFIG: SiteConfig = {
 const TOKEN_KEY = 'ms_session_token';
 const LANG_KEY = 'ms_lang';
 const THEME_KEY = 'ms_theme';
+// Render'dagi backend havolasi
 const API_BASE_URL = 'https://milliy-sertifikat-backend.onrender.com';
+
 export default function App() {
   const [token, setToken] = useState<string>(() => localStorage.getItem(TOKEN_KEY) || '');
   const [lang, setLang] = useState<LanguageCode>(() => {
@@ -94,7 +96,11 @@ export default function App() {
         ...(opts.headers as Record<string, string> | undefined),
       };
       if (token) headers['x-session-token'] = token;
-      const res = await fetch(url, { ...opts, headers });
+      
+      // BARCHA API SO'ROVLARIGA AVTOMATIK RENDER HAVOLASINI QO'SHISH
+      const fullUrl = url.startsWith('/api/') ? `${API_BASE_URL}${url}` : url;
+      
+      const res = await fetch(fullUrl, { ...opts, headers });
       const json = await res.json().catch(() => ({}));
       if (!res.ok) {
         throw new Error(json.error || `Server xatosi (${res.status})`);
@@ -156,10 +162,10 @@ export default function App() {
   const handleLogin = async (lg: string, pw: string): Promise<string | null> => {
     try {
       const res = await fetch(`${API_BASE_URL}/api/auth/login`, {
-  method: 'POST',
-  headers: { 'Content-Type': 'application/json' },
-  body: JSON.stringify({ lg, pw }),
-});
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ lg, pw }),
+      });
       const json = await res.json();
       if (!res.ok) return json.error || 'Kirishda xato.';
       localStorage.setItem(TOKEN_KEY, json.token);
@@ -177,7 +183,8 @@ export default function App() {
     pw: string
   ): Promise<string | null> => {
     try {
-      const res = await fetch('/api/auth/register', {
+      // BU YERDA HAM HAVOLA QO'SHILDI
+      const res = await fetch(`${API_BASE_URL}/api/auth/register`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ nm, lg, pw }),

@@ -4,10 +4,6 @@
     "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
     "rewrites": [
       {
-        "source": "/api/**",
-        "destination": "https://milliy-sertifikat-backend.onrender.com/api/**"
-      },
-      {
         "source": "**",
         "destination": "/index.html"
       }
