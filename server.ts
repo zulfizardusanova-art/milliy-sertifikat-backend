@@ -272,16 +272,43 @@ app.post('/api/users/:id/premium', (req, res) => {
 
 app.post('/api/ai/mock', async (req, res) => {
   const user = getSessionUser(req);
-  if (!user || !canUseAiGenerator(user.role)) { res.status(403).json({ error: 'Ruxsat yoq.' }); return; }
+  if (!user || !canUseAiGenerator(user.role)) {
+    res.status(403).json({ error: 'Ruxsat yoq.' });
+    return;
+  }
   const ai = getGeminiClient();
-  if (!ai) { res.status(400).json({ error: 'API KEY yoq.' }); return; }
+  if (!ai) {
+    res.status(400).json({ error: 'GEMINI_API_KEY sozlanmagan.' });
+    return;
+  }
   try {
     const response = await ai.models.generateContent({
-      model: 'gemini-1.5-flash', contents: buildMockTestPrompt(req.body),
-      config: { responseMimeType: 'application/json', responseSchema: { type: Type.ARRAY, items: { type: Type.OBJECT, properties: { k: { type: Type.STRING }, s: { type: Type.STRING }, o: { type: Type.ARRAY, items: { type: Type.STRING } }, c: { type: Type.INTEGER } } } } },
+      model: 'gemini-2.5-flash',
+      contents: buildMockTestPrompt(req.body),
+      config: {
+        responseMimeType: 'application/json',
+        responseSchema: {
+          type: Type.ARRAY,
+          items: {
+            type: Type.OBJECT,
+            properties: {
+              k: { type: Type.STRING },
+              s: { type: Type.STRING },
+              o: { type: Type.ARRAY, items: { type: Type.STRING } },
+              c: { type: Type.INTEGER },
+            },
+          },
+        },
+      },
     });
-    res.json({ questions: extractJsonArrayFromText(response.text ?? '[]'), source: 'gemini' });
-  } catch (err) { res.status(500).json({ error: 'AI xatosi.' }); }
+    const raw = extractJsonArrayFromText(response.text ?? '[]');
+    res.json({ questions: raw, source: 'gemini' });
+  } catch (err: any) {
+    console.error('Gemini AI xatosi:', err);
+    res.status(500).json({
+      error: err?.message || 'AI xatosi.',
+    });
+  }
 });
 
 async function startServer() {
