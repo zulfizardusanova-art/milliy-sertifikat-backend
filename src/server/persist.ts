@@ -2,7 +2,7 @@ import crypto from 'node:crypto';
 import fs from 'node:fs';
 import { cert, getApps, initializeApp } from 'firebase-admin/app';
 import { getFirestore, type Firestore } from 'firebase-admin/firestore';
-
+type DatabaseState = Record<string, any>;
 /**
  * Ma'lumotlarni Firestore'dagi `appdb` kolleksiyasida saqlaydi
  * (eski `users`, `tests`... kolleksiyalariga tegmaydi).
@@ -54,29 +54,28 @@ function sha(s: string): string {
   return crypto.createHash('sha1').update(s).digest('hex');
 }
 
-export async function loadFromFirestore(): Promise<Record<string, unknown> | null> {
-  const db = getDb();
-  if (!db) return null;
-  const metaSnap = await db.collection(COL).doc('meta').get();
-  if (!metaSnap.exists) return null;
-  const meta = (metaSnap.data()?.parts || {}) as Meta;
-  const out: Record<string, unknown> = {};
-  for (const [key, info] of Object.entries(meta)) {
-    if (!info.n) {
-      out[key] = null;
-      continue;
-    }
-    const refs = Array.from({ length: info.n }, (_, i) =>
-      db.collection(COL).doc(`${key}_${i}`)
-    );
-    const snaps = await db.getAll(...refs);
-    const text = snaps.map((s) => (s.data()?.d as string) || '').join('');
-    out[key] = JSON.parse(text);
-  }
-  lastMeta = meta;
-  return out;
-}
+export async function loadFromFirestore(): Promise<Partial<DatabaseState> | null> {
+  try {
+    const db = getDb();
+    if (!db) return null;
 
+        const doc = await db.collection('appdb').doc('users_0').get();
+    if (!doc.exists) {
+      return null; // Baza bo'sh, xato bermaymiz
+    }
+    const data = doc.data();
+    
+    // XATOLIKNI TUZATISH: Ma'lumot bo'sh bo'lsa, qulab tushmasin
+    if (!data || typeof data.d !== 'string' || data.d.trim() === '') {
+      return null;
+    }
+    
+    return JSON.parse(data.d);
+  } catch (error) {
+    console.error("Firestore dan o'qishda xato:", error);
+    return null; // Xato bo'lsa ham dasturni to'xtatmaymiz
+  }
+}
 let pending: Record<string, unknown> | null = null;
 let timer: NodeJS.Timeout | null = null;
 let writing: Promise<void> = Promise.resolve();
