@@ -283,7 +283,7 @@ app.post('/api/ai/mock', async (req, res) => {
   }
   try {
     const response = await ai.models.generateContent({
-      model: 'gemini-2.5-flash',
+      model: 'model: 'gemini-3.0-flash',',
       contents: buildMockTestPrompt(req.body),
       config: {
         responseMimeType: 'application/json',
